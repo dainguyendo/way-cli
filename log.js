@@ -26,22 +26,18 @@ const {
     strikethrough
 } = chalk;
 
-const error = message => log(bgRed.bold(message));
-const info = message => log(yellow(message));
-
-const japan = message => log(bgWhite.red(message));
-
 const _createTable = (headers, rows) => {
     const table = new Table({ head: headers });
     table.push(...rows);
     return table;
 }
 
+const error = message => log(red.underline('Error'), message);
+const info = message => log(cyan.underline('Info'), message);
 const table = (headers, rows) => {
     const t = _createTable(headers, rows);
     log(t.toString());
 }
-
 
 module.exports = {
     error,

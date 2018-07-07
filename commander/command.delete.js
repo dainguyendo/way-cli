@@ -1,5 +1,6 @@
 const file = require('../file');
 const config = require('../config');
+const log = require('../log');
 
 module.exports = alias => {
     const aliases = file.checkAliases();
@@ -9,8 +10,8 @@ module.exports = alias => {
         const newAliases = Object.assign({}, aliases);
         const json = JSON.stringify(newAliases);
         file.write(config.aliasesFilePath, json, 'utf8');
-        console.log(`Deleted ${alias} alias`);
+        log.info(`Alias ${alias} has been deleted.`)
     } else {
-        console.log('Alias not found');
+        log.info(`Alias ${alias} was not found.`);
     }
 }

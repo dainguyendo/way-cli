@@ -9,7 +9,8 @@ module.exports = (origins, destinations, mode, unit, avoid) => {
     const args = validate(origins, destinations, mode, unit, avoid);
     const { error, errors } = args;
     if (error) {
-        console.log('validation errors...');
+        log.error('Inputs contain validation errors');
+        log.table(['Errors'], errors.map(err => [err]));
     } else {
         origins = origins.map(getAlias);
         destinations = destinations.map(getAlias);
@@ -18,7 +19,7 @@ module.exports = (origins, destinations, mode, unit, avoid) => {
             const parsed = parse(response);
             const { success, status } = parsed;
             if (!success) {
-                console.log(status, 'unsuccessful parsing...');    
+                log.error(status);
             } else {
                 const { results } = parsed
                 const headers = [
@@ -31,7 +32,7 @@ module.exports = (origins, destinations, mode, unit, avoid) => {
                 log.table(headers, rows);
             }
         }).catch(err => {
-            console.log('fetch error...', err);
+            log.error(err);
         });
     }
 };
