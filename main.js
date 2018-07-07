@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
+const config = require('./config');
+require('dotenv').config({
+    path: config.envFilePath
+});
 const program = require('commander');
 const inquirer = require('inquirer');
 
@@ -21,7 +24,7 @@ program
 program
     .command('save [place] [alias]')
     .alias('s')
-    .description('Save a location as an alias for optional <origins> or <destinations> arguements')
+    .description('Save a location as an alias for optional <origins> or <destinations> arguements. If the alias already exists the aliases will be updated.')
     .action((place, alias) => {
         if (program.interactive) {
             inquirer.prompt(promptSave).then(inputs => {
@@ -41,7 +44,7 @@ program
 program
     .command('distance [origins] [destinations]')
     .option('-m, --mode <mode>', 'Preferred mode of transportation. Options are [bicycling, driving (default), walking]')
-    .alias('t')
+    .alias('d')
     .description('Creates a distance matrix between <origins> and <destinations>')
     .action((origins, destinations) => {
         if (program.interactive) {
