@@ -9,6 +9,7 @@ const inquirer = require('inquirer');
 
 const handleDistanceCommand = require('./commander/command.distance');
 const handleSaveCommand = require('./commander/command.save');
+const handleDeleteCommand = require('./commander/command.delete');
 const handleListCommand = require('./commander/command.list');
 
 const promptTime = require('./inquirer/inquirer.distance');
@@ -34,6 +35,12 @@ program
             handleSaveCommand(place, alias);
         }
     });
+
+program
+    .command('delete [alias]')
+    .alias('del')
+    .description('Remove an alias.')
+    .action(alias => handleDeleteCommand(alias));
 
 program
     .command('list')
