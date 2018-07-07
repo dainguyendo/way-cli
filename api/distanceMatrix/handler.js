@@ -9,8 +9,7 @@ module.exports = (origins, destinations, mode, unit, avoid) => {
     const args = validate(origins, destinations, mode, unit, avoid);
     const { error, errors } = args;
     if (error) {
-        log.error('Inputs contain validation errors');
-        log.table(['Errors'], errors.map(err => [err]));
+        log.table(['Input Validation Errors'], errors.map(err => [err]));
     } else {
         origins = origins.map(getAlias);
         destinations = destinations.map(getAlias);

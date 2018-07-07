@@ -8,8 +8,7 @@ module.exports = (origin, destination, mode) => {
     const { error, errors } = args;
     
     if (error) {
-        log.error('Inputs contain validation errors');
-        log.table(['Errors'], errors.map(err => [err]));
+        log.table(['Input Validation Errors'], errors.map(err => [err]));
     } else {
         origin = getAlias(origin);
         destination = getAlias(destination);
