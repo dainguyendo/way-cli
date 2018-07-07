@@ -1,13 +1,12 @@
 const _ = require('lodash');
+const config = require('./config');
 
 const validateString = (string) => {
     return _.isEmpty(string) ? false : true;
 }
 
-const validateMode = mode => {
-    const modes = [ 'driving', 'walking', 'bicycling' ];
-    return modes.includes(mode.toLowerCase());
-}
+const validateDistanceMode = mode => config.distanceModes.includes(mode.toLowerCase());
+const validateDirectionMode = mode => config.directionModes.includes(mode.toLowerCase());
 
 const validateAvoids = avoid => {
     const avoids = ['tolls', 'highways', 'ferries', 'indoor'];
@@ -25,7 +24,8 @@ const validateUnits = unit => {
 
 module.exports = {
     validateString,
-    validateMode,
+    validateDirectionMode,
+    validateDistanceMode,
     validateAvoids,
     validateUnits
 }

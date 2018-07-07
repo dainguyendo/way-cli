@@ -37,10 +37,12 @@ const info = message => log(cyan.underline('Info'), message);
 const table = (headers, rows) => {
     const t = _createTable(headers, rows);
     log(t.toString());
-}
+};
+const url = link => log(green.italic.underline.bold(link));
 
 module.exports = {
     error,
     info,
-    table
+    table,
+    url
 };

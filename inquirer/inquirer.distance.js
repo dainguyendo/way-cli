@@ -1,4 +1,5 @@
 const validations = require('../validations');
+const config = require('../config');
 
 module.exports = [
     {
@@ -6,45 +7,30 @@ module.exports = [
         name: 'origins',
         message: 'Specified origin(s). For multiple origins seperate via "|". Example: "Origin A | Origin B"',
         default: '',
-        validate: function (input) {
-            return validations.validateString(input);
-        }
+        validate: (input) => validations.validateString(input)
     },
     {
         type: 'input',
         name: 'destinations',
         message: 'Specified destination(s). For multiple destinations seperate via "|". Example: "Destination A | Destination B"',
         default: '',
-        validate: function (input) {
-            return validations.validateString(input);
-        }
+        validate: (input) => validations.validateString(input)
     },
     {
         type: 'list',
         name: 'mode',
         message: 'Specified mode of transportation?',
-        choices: [
-            'driving',
-            'walking',
-            'bicycling'
-        ],
+        choices: config.distanceModes,
         default: 'driving',
-        validate: function (input) {
-            return validations.validateMode(input);
-        }
+        validate: (input) => validations.validateDistanceMode(input)
     },
     {
         type: 'list',
         name: 'unit',
         message: 'Specified type of measurement?',
-        choices: [
-            'metric',
-            'imperial',
-        ],
+        choices: config.units,
         default: 'metric',
-        validate: function (input) {
-            return validations.validateUnits(input);
-        }
+        validate: (input) => validations.validateUnits(input)
     },
     {
         type: 'list',
@@ -60,9 +46,7 @@ module.exports = [
         filter: function (input) {
             return input === 'none' ? null : input;
         },
-        validate: function (input) {
-            return validations.validateAvoids(input);
-        },
+        validate: (input) => validations.validateAvoids(input),
         default: null
     }
 ];
