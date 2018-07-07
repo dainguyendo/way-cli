@@ -1,5 +1,6 @@
-const aliases = require('../aliases.json');
+const file = require('../file');
 
 module.exports = () => {
+    const aliases = file.checkAliases();
     console.log(aliases);
 }

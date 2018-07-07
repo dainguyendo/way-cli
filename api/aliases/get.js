@@ -1,2 +1,6 @@
-const aliases = require('../../aliases.json');
-module.exports = alias => aliases.hasOwnProperty(alias) ? aliases[alias] : alias;
+const file = require('../../file');
+
+module.exports = alias => {
+    const aliases = file.checkAliases();
+    return aliases.hasOwnProperty(alias) ? aliases[alias] : alias;
+}

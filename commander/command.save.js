@@ -1,7 +1,8 @@
-const fs = require('fs');
-const aliases = require('../aliases.json');
+const file = require('../file');
+const config = require('../config');
 
 module.exports = (place, alias) => {
+    const aliases = file.checkAliases();
     const exists = aliases.hasOwnProperty(alias);
     if (exists) {
         console.log('Alias exists, updating...');
@@ -11,11 +12,6 @@ module.exports = (place, alias) => {
     aliases[alias] = place;
     const newAliases = Object.assign({}, aliases);
     const json = JSON.stringify(newAliases);
-    fs.writeFile('../../aliases.json', json, 'utf8', (err) => {
-        if (err) {
-            console.log('Error saving aliases', err);
-        } else {
-            console.log('Aliases updated');
-        }
-    });
+    file.write(config.aliasesFilePath, json, 'utf8');
+    console.log('Aliases updated');
 }
