@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const Table = require('cli-table');
 const log = console.log;
 
 const {
@@ -30,8 +31,20 @@ const info = message => log(yellow(message));
 
 const japan = message => log(bgWhite.red(message));
 
+const _createTable = (headers, rows) => {
+    const table = new Table({ head: headers });
+    table.push(...rows);
+    return table;
+}
+
+const table = (headers, rows) => {
+    const t = _createTable(headers, rows);
+    log(t.toString());
+}
+
 
 module.exports = {
     error,
-    info
+    info,
+    table
 };
