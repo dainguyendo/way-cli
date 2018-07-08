@@ -30,6 +30,11 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0"
   },
+  "homepage": "https://github.com/dainguyendo/way-cli",
+  "repository": "github:dainguyendo/way-cli",
+  "bugs": {
+    "url": "https://github.com/dainguyendo/way-cli/issues"
+  },
   "keywords": [
     "javascript",
     "cli",
