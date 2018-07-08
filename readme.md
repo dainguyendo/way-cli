@@ -3,24 +3,25 @@
 
 The terminal alone can achieve so much, so why leave it for directions or durations to various locations? Rather than tabbing to a browser to look up directions to the newest restaurant or the time it takes to reach the babysitter, `way-cli` aims to assist in speeding a terminal user's locational needs.
 
-![preview](https://raw.githubusercontent.com/dainguyendo/way-cli/master/assets/distance.gif)
-
 ## Table of contents
-- [About](##**about**)
 - [Installation](##**installation**)
 - [Options](##**options**)
 - [Commands](##**commands**)
 - [Issues](##**issues**)
 
----
-
-## **About**
-
- This project uses the [Google Maps Platform](https://cloud.google.com/maps-platform/). Exposing the available APIs to serve data for project.
-
----
-
 ## Installation
+
+```
+npm i way-cli -g
+```
+
+### *Important*
+This project is powered by the [Google Maps Platform](https://cloud.google.com/maps-platform/). **The project does not supply an API Key.** [Click here to generate your Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key).
+
+After creating your API Key create a `.env` file at the root of the installed package. Edit your environment file to contain:
+```
+API_KEY=<API_KEY>
+```
 
 ---
 
@@ -143,5 +144,4 @@ Saves `place` as `alias` within `aliases.json`. When specifying arguments for `o
 ---
 
 ## **Issues**
-
-
+Having issues? Please submit an issue via [GitHub repository](https://github.com/dainguyendo/way-cli).
