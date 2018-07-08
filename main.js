@@ -4,6 +4,7 @@ const config = require('./config');
 require('dotenv').config({
     path: config.envFilePath
 });
+const { version } = require('./package.json');
 const program = require('commander');
 const inquirer = require('inquirer');
 
@@ -18,7 +19,7 @@ const promptSave = require('./inquirer/inquirer.save');
 const promptDirection = require('./inquirer/inquirer.directions');
 
 program
-    .version('1.0.0', '-v, --version')
+    .version(version, '-v, --version')
     .option('-m, --mode <mode>', 'Mode of transportation preference. Options: driving, walking, biycling, or transit (directions command only)', 'driving')
     .option('-u, --unit <unit>', 'Return results in either metric or imperial units', 'metric')
     .option('-a, --avoid <avoid>', 'Avoidance preferences. Options: tolls, highways, ferries, indoor', null)
