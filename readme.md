@@ -3,6 +3,8 @@
 
 The terminal alone can achieve so much, so why leave it for directions or durations to various locations? Rather than tabbing to a browser to look up directions to the newest restaurant or the time it takes to reach the babysitter, `way-cli` aims to assist in speeding a terminal user's locational needs.
 
+![preview](https://raw.githubusercontent.com/dainguyendo/way-cli/master/assets/distance.gif)
+
 ## Table of contents
 - [About](##**about**)
 - [Installation](##**installation**)
