@@ -1,6 +1,6 @@
 {
   "name": "way-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool to help terminal users find their way",
   "main": "main.js",
   "preferGlobal": true,
