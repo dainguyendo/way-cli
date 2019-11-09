@@ -9,13 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm link",
     "postuninstall": "npm unlink",
-    "compile": "tsc -p tsconfig.json"
+    "compile": "tsc -p tsconfig.json",
+    "build": "rm -rf dist/ && rollup -c"
   },
   "author": "Dai Nguyendo",
   "license": "MIT",
   "dependencies": {
     "@google/maps": "^1.0.2",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "cli-table": "^0.3.1",
     "commander": "^3.0.2",
     "dotenv": "^8.2.0",
@@ -24,7 +25,12 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "@types/cli-table": "^0.3.0",
     "@types/google__maps": "^0.5.8",
+    "@types/inquirer": "^6.5.0",
+    "@types/node": "^12.11.7",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
     "eslint": "^6.5.1",
     "eslint-config-minimal": "^0.4.2",
     "eslint-config-standard": "^14.1.0",
@@ -34,9 +40,15 @@
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
-    "prettier": "1.18.2",
+    "prettier": "^1.19.1",
     "rollup": "^1.25.1",
-    "typescript": "^3.6.4"
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.2"
   },
   "homepage": "https://github.com/dainguyendo/way-cli",
   "repository": "github:dainguyendo/way-cli",
