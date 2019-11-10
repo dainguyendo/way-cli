@@ -9,7 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm link",
     "postuninstall": "npm unlink",
-    "compile": "tsc -p tsconfig.json"
+    "build:ts": "tsc",
+    "watch:ts": "tsc -w",
+    "start": "node dist/main.js"
   },
   "author": "Dai Nguyendo",
   "license": "MIT",
@@ -40,7 +42,6 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.19.1",
-    "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
   "homepage": "https://github.com/dainguyendo/way-cli",

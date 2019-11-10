@@ -1,6 +1,8 @@
 import { Answers } from 'inquirer';
 import fs from 'fs';
 import { USER_CONFIG_PATH, DEFAULT_USER_CONFIG } from '../config';
+import { WayCLIUserConfiguration } from '../types';
+import * as log from '../log';
 
 export async function handleConfigurePrompt(args: Answers) {
   const { language, mode, units } = args;
@@ -22,7 +24,7 @@ export async function handleConfigurePrompt(args: Answers) {
   }
 }
 
-export async function getUserConfiguration() {
+export async function getUserConfiguration(): Promise<WayCLIUserConfiguration> {
   const isExist = fs.existsSync(USER_CONFIG_PATH);
   if (isExist) {
     const config = require(USER_CONFIG_PATH);
@@ -34,7 +36,7 @@ export async function getUserConfiguration() {
       'utf8'
     );
 
-    console.log('User configuration uninitialized, setting default.');
+    log.info('User configuration uninitialized, setting default.');
 
     const config = require(USER_CONFIG_PATH);
     return config;

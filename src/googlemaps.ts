@@ -1,6 +1,7 @@
 import * as googleClient from '@google/maps';
 import { Answers } from 'inquirer';
 import { getUserConfiguration } from './handlers/handleConfigurePrompt';
+import * as log from './log';
 
 function initializeGoogleClient() {
   const client = googleClient.createClient({
@@ -11,10 +12,9 @@ function initializeGoogleClient() {
 }
 
 export async function getDistanceMatrix(args: Answers) {
-  const { origins, destinations, avoid } = args;
-  const { language, mode, units } = await getUserConfiguration();
-
   try {
+    const { origins, destinations, avoid } = args;
+    const { language, mode, units } = await getUserConfiguration();
     const client = initializeGoogleClient();
     const matrix = await client
       .distanceMatrix({
@@ -28,35 +28,35 @@ export async function getDistanceMatrix(args: Answers) {
       .asPromise();
     return matrix;
   } catch (error) {
-    console.log('Bad', error);
+    log.error(error);
   }
 }
 
 export async function getDirections(args: Answers) {
-  const {
-    origin,
-    destination,
-    mode,
-    avoid,
-    units,
-    departure_time,
-    arrival_time
-  } = args;
   try {
+    const {
+      origin,
+      destination
+      // avoid
+      // departure_time,
+      // arrival_time
+    } = args;
+    const { language, mode, units } = await getUserConfiguration();
     const client = initializeGoogleClient();
     const directions = await client
       .directions({
         origin,
         destination,
         mode,
-        avoid,
+        // avoid,
         units,
-        departure_time,
-        arrival_time
+        // departure_time,
+        // arrival_time,
+        language
       })
       .asPromise();
     return directions;
   } catch (error) {
-    console.log('Bad', error);
+    log.error(error);
   }
 }
