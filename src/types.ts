@@ -5,3 +5,13 @@ export interface WayCLIUserConfiguration {
   mode: TravelMode;
   units: UnitSystem;
 }
+
+export interface WayCLIDistanceMatrixResult {
+  error?: boolean;
+  origin?: string;
+  destination?: string;
+  duration?: string;
+  durationInTraffic?: string;
+  distance?: string;
+  fare?: string;
+}
