@@ -9,8 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm link",
     "postuninstall": "npm unlink",
-    "compile": "tsc -p tsconfig.json",
-    "build": "rm -rf dist/ && rollup -c"
+    "compile": "tsc -p tsconfig.json"
   },
   "author": "Dai Nguyendo",
   "license": "MIT",
@@ -41,12 +40,6 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.19.1",
-    "rollup": "^1.25.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript": "^1.0.1",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
