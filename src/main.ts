@@ -1,9 +1,8 @@
-import * as path from 'path';
 import * as dotenv from 'dotenv';
 import program from 'commander';
 import inquirer from 'inquirer';
-import { version } from '../package.json';
 
+import directionsPrompt from './prompts/directions';
 import distanceMatrixQuestions from './prompts/distanceMatrix';
 import configureQuestions from './prompts/configure';
 import { getDistanceMatrix, getDirections } from './googlemaps';
@@ -12,7 +11,7 @@ import { formatDistanceMatrix } from './formats/distanceMatrix.js';
 
 dotenv.config();
 
-program.version(version, '-v, --version');
+program.version('2.0.0', '-v, --version');
 
 program
   .command('configure')
@@ -41,8 +40,9 @@ program
   .alias('dir')
   .description('Get directions from <origin> to <destination>')
   .action(async () => {
-    // const inputs = await inquirer.prompt(directionQuestions);
-    // getDirections(inputs);
+    const inputs = await inquirer.prompt(directionsPrompt);
+    const clientResponse = await getDirections(inputs);
+    console.log(clientResponse);
   });
 
 program.parse(process.argv);
