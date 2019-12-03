@@ -1,11 +1,9 @@
 import * as dotenv from 'dotenv';
 import program from 'commander';
-import inquirer from 'inquirer';
 
-import configureQuestions from './prompts/configure';
-import { handleConfigurePrompt } from './handlers/handleConfigurePrompt';
 import { directionsCommand } from './directions';
 import { distanceMatrixCommand } from './distanceMatrix';
+import { configureCommand } from './configure';
 
 dotenv.config();
 
@@ -15,10 +13,7 @@ program
   .command('configure')
   .alias('config')
   .description('Set up common configurations for way-cli')
-  .action(async () => {
-    const inputs = await inquirer.prompt(configureQuestions);
-    handleConfigurePrompt(inputs);
-  });
+  .action(async () => configureCommand());
 
 program
   .command('distance')
