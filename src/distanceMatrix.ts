@@ -1,6 +1,6 @@
 import { prompt, Answers } from 'inquirer';
 import distanceMatrixPrompt from './prompts/distanceMatrix';
-import { getUserConfiguration } from './handlers/handleConfigurePrompt';
+import { getConfiguration } from './configure';
 import { initializeGoogleClient } from './googlemaps';
 import * as log from './log';
 import { DistanceMatrixRow, DistanceMatrixRequest } from '@google/maps';
@@ -42,7 +42,7 @@ function formatResponseDistanceMatrix(
 async function requestDistanceMatrix(args: Answers) {
   try {
     const { origins, destinations, avoid } = args;
-    const userConfigration = await getUserConfiguration();
+    const userConfigration = await getConfiguration();
     const client = initializeGoogleClient();
 
     const distanceMatrixRequest: DistanceMatrixRequest = {
