@@ -3,7 +3,7 @@ import distanceMatrixPrompt from './prompts/distanceMatrix';
 import { getUserConfiguration } from './handlers/handleConfigurePrompt';
 import { initializeGoogleClient } from './googlemaps';
 import * as log from './log';
-import { DistanceMatrixRow } from '@google/maps';
+import { DistanceMatrixRow, DistanceMatrixRequest } from '@google/maps';
 import { WayCLIDistanceMatrixResult } from './types';
 
 function formatResponseDistanceMatrix(
@@ -44,13 +44,19 @@ async function requestDistanceMatrix(args: Answers) {
     const { origins, destinations, avoid } = args;
     const userConfigration = await getUserConfiguration();
     const client = initializeGoogleClient();
+
+    const distanceMatrixRequest: DistanceMatrixRequest = {
+      origins,
+      destinations,
+      ...userConfigration
+    };
+
+    if (avoid.length === 0 || !avoid.includes('none')) {
+      distanceMatrixRequest.avoid = avoid;
+    }
+
     const response = await client
-      .distanceMatrix({
-        origins,
-        destinations,
-        // avoid,
-        ...userConfigration
-      })
+      .distanceMatrix(distanceMatrixRequest)
       .asPromise();
     return response;
   } catch (error) {

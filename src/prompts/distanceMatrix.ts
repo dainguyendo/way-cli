@@ -7,16 +7,16 @@ const distanceMatrixQuestions: QuestionCollection = [
     type: 'input',
     message:
       'Specify origin(s). For multiple origins use the "|" as the delimiter.\nExample: "Origin A | Origin B"',
-    default: ''
-    // validate: () => true
+    default: '',
+    validate: value => !!value
   },
   {
     name: 'destinations',
     type: 'input',
     message:
       'Specify destination(s). For multiple destinations use the "|" as the delimiter.\nExample: "Destination A | Destination B"',
-    default: ''
-    // validate: () => true
+    default: '',
+    validate: value => !!value
   },
   {
     name: 'avoid',
@@ -29,8 +29,7 @@ const distanceMatrixQuestions: QuestionCollection = [
       'indoor',
       'tolls'
     ] as TravelRestriction[],
-    default: '' as TravelRestriction
-    // validate: () => true
+    default: 'none' as TravelRestriction
   }
 ];
 

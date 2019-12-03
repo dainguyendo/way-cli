@@ -5,13 +5,15 @@ const directionsPrompt: QuestionCollection = [
     name: 'origin',
     type: 'input',
     message: 'Specify origin',
-    default: ''
+    default: '',
+    validate: value => !!value
   },
   {
     name: 'destination',
     type: 'input',
     message: 'Specify destination',
-    default: ''
+    default: '',
+    validate: value => !!value
   }
 ];
 export default directionsPrompt;
