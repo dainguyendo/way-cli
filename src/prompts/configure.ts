@@ -15,7 +15,6 @@ const configureQuestions: QuestionCollection = [
     message: 'Select a mode of transportation',
     choices: ['bicycling', 'driving', 'transit', 'walking'] as TravelMode[],
     default: 'driving' as TravelMode
-    // validate: () => true
   },
   {
     name: 'units',
@@ -23,7 +22,6 @@ const configureQuestions: QuestionCollection = [
     message: 'Specify measurement unit',
     choices: ['imperial', 'metric'] as UnitSystem[],
     default: 'metric' as UnitSystem
-    // validate: () => true
   }
 ];
 export default configureQuestions;
