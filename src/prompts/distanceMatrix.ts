@@ -1,7 +1,7 @@
-import { QuestionCollection } from 'inquirer';
-import { TravelMode, UnitSystem, TravelRestriction } from '@google/maps';
+import Inquirer from 'inquirer';
+import { TravelRestriction } from '@google/maps';
 
-const distanceMatrixQuestions: QuestionCollection = [
+const distanceMatrixQuestions: Inquirer.QuestionCollection = [
   {
     name: 'origins',
     type: 'input',

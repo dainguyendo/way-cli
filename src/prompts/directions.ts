@@ -1,6 +1,6 @@
-import { QuestionCollection } from 'inquirer';
+import Inquirer from 'inquirer';
 
-const directionsPrompt: QuestionCollection = [
+const directionsPrompt: Inquirer.QuestionCollection = [
   {
     name: 'origin',
     type: 'input',
