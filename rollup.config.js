@@ -1,6 +1,7 @@
 import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
 import commonjs from 'rollup-plugin-commonjs';
+import executable from 'rollup-plugin-executable';
 import resolve from 'rollup-plugin-node-resolve';
 import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
@@ -23,6 +24,7 @@ export default {
     }
   ],
   plugins: [
+    executable(),
     external(),
     resolve(),
     typescript({
