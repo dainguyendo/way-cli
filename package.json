@@ -6,9 +6,7 @@
   "module": "dist/main.es.js",
   "jsnext:main": "dist/main.es.js",
   "preferGlobal": true,
-  "bin": {
-    "way": "dist/main.js"
-  },
+  "bin": "dist/main.js",
   "scripts": {
     "build": "npm run clean:build && rollup -c",
     "clean:build": "rm -rf dist",

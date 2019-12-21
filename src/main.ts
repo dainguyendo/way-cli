@@ -1,9 +1,8 @@
-import * as dotenv from 'dotenv';
 import program from 'commander';
-
+import * as dotenv from 'dotenv';
+import { configureCommand } from './configure';
 import { directionsCommand } from './directions';
 import { distanceMatrixCommand } from './distanceMatrix';
-import { configureCommand } from './configure';
 
 dotenv.config();
 
