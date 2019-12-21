@@ -2,14 +2,14 @@ import { DirectionsResponse } from '@google/maps';
 import * as log from './log';
 import { getConfiguration } from './configure';
 import { initializeGoogleClient } from './googlemaps';
-import { Answers, prompt } from 'inquirer';
+import Inquirer from 'inquirer';
 import directionsPrompt from './prompts/directions';
 import * as qs from 'query-string';
 import open from 'open';
 import { WayCLIUserConfiguration } from './types';
 
 async function requestDirections(
-  args: Answers,
+  args: Inquirer.Answers,
   configuration: WayCLIUserConfiguration
 ) {
   try {
@@ -27,7 +27,7 @@ async function requestDirections(
 
 async function generateGoogleMapsLink(
   json: DirectionsResponse,
-  args: Answers,
+  args: Inquirer.Answers,
   configuration: WayCLIUserConfiguration
 ): Promise<string> {
   const base = 'https://www.google.com/maps/dir/?api=1';
@@ -48,11 +48,13 @@ async function generateGoogleMapsLink(
 }
 
 export async function directionsCommand() {
-  const args = await prompt(directionsPrompt);
+  const args = await Inquirer.prompt(directionsPrompt);
   const configuration = await getConfiguration();
   const response = await requestDirections(args, configuration);
-  const { json } = response;
-  const url = await generateGoogleMapsLink(json, args, configuration);
-  log.ok(url);
-  await open(url);
+  if (response) {
+    const { json } = response;
+    const url = await generateGoogleMapsLink(json, args, configuration);
+    log.ok(url);
+    await open(url);
+  }
 }

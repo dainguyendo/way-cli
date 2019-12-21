@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import Inquirer from 'inquirer';
 import configureQuestions from './prompts/configure';
 import * as path from 'path';
 import fs from 'fs';
@@ -42,7 +42,7 @@ export async function getConfiguration(): Promise<WayCLIUserConfiguration> {
 }
 
 export const configureCommand = async () => {
-  const inputs = await inquirer.prompt(configureQuestions);
+  const inputs = await Inquirer.prompt(configureQuestions);
   saveConfiguration(inputs);
   await getConfiguration();
 };

@@ -1,7 +1,7 @@
-import { QuestionCollection } from 'inquirer';
+import Inquirer from 'inquirer';
 import { Language, TravelMode, UnitSystem } from '@google/maps';
 
-const configureQuestions: QuestionCollection = [
+const configureQuestions: Inquirer.QuestionCollection = [
   {
     name: 'language',
     type: 'input',

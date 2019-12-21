@@ -1,4 +1,4 @@
-import { prompt, Answers } from 'inquirer';
+import Inquirer from 'inquirer';
 import distanceMatrixPrompt from './prompts/distanceMatrix';
 import { getConfiguration } from './configure';
 import { initializeGoogleClient } from './googlemaps';
@@ -39,7 +39,7 @@ function formatResponseDistanceMatrix(
   return results;
 }
 
-async function requestDistanceMatrix(args: Answers) {
+async function requestDistanceMatrix(args: Inquirer.Answers) {
   try {
     const { origins, destinations, avoid } = args;
     const userConfigration = await getConfiguration();
@@ -66,42 +66,45 @@ async function requestDistanceMatrix(args: Answers) {
 
 export async function distanceMatrixCommand() {
   try {
-    const args = await prompt(distanceMatrixPrompt);
+    const args = await Inquirer.prompt(distanceMatrixPrompt);
     const response = await requestDistanceMatrix(args);
-    const { json } = response;
-    const {
-      status,
-      error_message,
-      origin_addresses,
-      destination_addresses,
-      rows
-    } = json;
 
-    if (status !== 'OK') {
-      throw new Error(`${status}: ${error_message}`);
+    if (response) {
+      const { json } = response;
+      const {
+        status,
+        error_message,
+        origin_addresses,
+        destination_addresses,
+        rows
+      } = json;
+
+      if (status !== 'OK') {
+        throw new Error(`${status}: ${error_message}`);
+      }
+
+      // TODO Type definitions has a bug - make contribution PR when possible
+      const origins = (origin_addresses as any) as string[];
+
+      const formattedMatrix = formatResponseDistanceMatrix(
+        origins,
+        destination_addresses,
+        rows
+      );
+
+      log.table(
+        ['Origin', 'Destination', 'Duration', 'Distance', 'Fare'],
+        formattedMatrix.map(
+          ({ origin, destination, duration, distance, fare }) => [
+            origin || '',
+            destination || '',
+            duration || '',
+            distance || '',
+            fare || ''
+          ]
+        )
+      );
     }
-
-    // TODO Type definitions has a bug - make contribution PR when possible
-    const origins = (origin_addresses as any) as string[];
-
-    const formattedMatrix = formatResponseDistanceMatrix(
-      origins,
-      destination_addresses,
-      rows
-    );
-
-    log.table(
-      ['Origin', 'Destination', 'Duration', 'Distance', 'Fare'],
-      formattedMatrix.map(
-        ({ origin, destination, duration, distance, fare }) => [
-          origin || '',
-          destination || '',
-          duration || '',
-          distance || '',
-          fare || ''
-        ]
-      )
-    );
   } catch (error) {
     log.error(error);
   }
