@@ -32125,6 +32125,11 @@ var log$1 = console.log,
     var r = new lib$1({ head: t });
     r.push.apply(r, e), log$1(r.toString());
   },
+  seeAPIKeySetup = function() {
+    return info(
+      'Please see https://github.com/dainguyendo/way-cli#setup to set up your Google API Key.'
+    );
+  },
   USER_CONFIG_PATH = path.join(__dirname, 'userConfig.json'),
   DEFAULT_USER_CONFIGURATION = {
     language: 'en',
@@ -34704,6 +34709,12 @@ for (
 function initializeGoogleClient() {
   return createClient({ key: process.env.WAY_CLI_API_KEY, Promise: Promise });
 }
+function isAPIKeyError(t) {
+  return !(
+    'string' != typeof t ||
+    !t.match(/Missing either a valid API key, or a client ID and secret/)
+  );
+}
 var directionsPrompt = [
     {
       name: 'origin',
@@ -34918,7 +34929,12 @@ function requestDirections(t, e) {
         case 1:
           return [2, a.sent()];
         case 2:
-          return (u = a.sent()), error(u), [3, 3];
+          return (
+            (u = a.sent()),
+            error(u),
+            isAPIKeyError(u) && seeAPIKeySetup(),
+            [3, 3]
+          );
         case 3:
           return [2];
       }
@@ -35061,7 +35077,12 @@ function requestDistanceMatrix(t) {
         case 2:
           return [2, a.sent()];
         case 3:
-          return (u = a.sent()), error(u), [3, 4];
+          return (
+            (u = a.sent()),
+            error(u),
+            isAPIKeyError(u) && seeAPIKeySetup(),
+            [3, 4]
+          );
         case 4:
           return [2];
       }

@@ -13,3 +13,8 @@ export const table = (headers: string[], rows: string[][]) => {
   cliTable.push(...rows);
   log(cliTable.toString());
 };
+
+export const seeAPIKeySetup = () =>
+  info(
+    'Please see https://github.com/dainguyendo/way-cli#setup to set up your Google API Key.'
+  );

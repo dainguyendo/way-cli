@@ -1,7 +1,7 @@
 import { DirectionsResponse } from '@google/maps';
 import * as log from './log';
 import { getConfiguration } from './configure';
-import { initializeGoogleClient } from './googlemaps';
+import { initializeGoogleClient, isAPIKeyError } from './googlemaps';
 import Inquirer from 'inquirer';
 import directionsPrompt from './prompts/directions';
 import * as qs from 'query-string';
@@ -22,6 +22,9 @@ async function requestDirections(
     return response;
   } catch (error) {
     log.error(error);
+    if (isAPIKeyError(error)) {
+      log.seeAPIKeySetup();
+    }
   }
 }
 

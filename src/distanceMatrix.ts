@@ -1,7 +1,7 @@
 import Inquirer from 'inquirer';
 import distanceMatrixPrompt from './prompts/distanceMatrix';
 import { getConfiguration } from './configure';
-import { initializeGoogleClient } from './googlemaps';
+import { initializeGoogleClient, isAPIKeyError } from './googlemaps';
 import * as log from './log';
 import { DistanceMatrixRow, DistanceMatrixRequest } from '@google/maps';
 import { WayCLIDistanceMatrixResult } from './types';
@@ -61,6 +61,9 @@ async function requestDistanceMatrix(args: Inquirer.Answers) {
     return response;
   } catch (error) {
     log.error(error);
+    if (isAPIKeyError(error)) {
+      log.seeAPIKeySetup();
+    }
   }
 }
 

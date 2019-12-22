@@ -31661,22 +31661,27 @@ var hh = console.log,
     var n = new lh({ head: t });
     n.push.apply(n, e), hh(n.toString());
   },
-  vh = r(__dirname, 'userConfig.json'),
-  yh = { language: 'en', mode: 'driving', units: 'metric' };
-function gh() {
-  i.existsSync(vh) ||
-    (ph('Initializing default user configuration'),
-    i.writeFileSync(vh, JSON.stringify(D({}, yh), null, 2), 'utf8'));
-}
+  vh = function() {
+    return ph(
+      'Please see https://github.com/dainguyendo/way-cli#setup to set up your Google API Key.'
+    );
+  },
+  yh = r(__dirname, 'userConfig.json'),
+  gh = { language: 'en', mode: 'driving', units: 'metric' };
 function mh() {
+  i.existsSync(yh) ||
+    (ph('Initializing default user configuration'),
+    i.writeFileSync(yh, JSON.stringify(D({}, gh), null, 2), 'utf8'));
+}
+function Dh() {
   return w(this, void 0, Promise, function() {
     var t;
     return _(this, function(e) {
-      return gh(), (t = require(vh)), dh(t), [2, t];
+      return mh(), (t = require(yh)), dh(t), [2, t];
     });
   });
 }
-var Dh = function() {
+var wh = function() {
     return w(void 0, void 0, void 0, function() {
       return _(this, function(t) {
         switch (t.label) {
@@ -31685,12 +31690,12 @@ var Dh = function() {
           case 1:
             return (
               (function(t) {
-                gh();
-                var e = require(vh),
+                mh();
+                var e = require(yh),
                   n = Object.assign({}, D(D({}, e), t));
-                i.writeFileSync(vh, JSON.stringify(n, null, 2), 'utf8');
+                i.writeFileSync(yh, JSON.stringify(n, null, 2), 'utf8');
               })(t.sent()),
-              [4, mh()]
+              [4, Dh()]
             );
           case 2:
             return t.sent(), [2];
@@ -31698,7 +31703,7 @@ var Dh = function() {
       });
     });
   },
-  wh = F(function(t, e) {
+  _h = F(function(t, e) {
     /**
      * @license
      * Copyright 2016 Google Inc. All Rights Reserved.
@@ -31832,21 +31837,21 @@ var Dh = function() {
         });
       });
   });
-const _h = '__agent_base_https_request_patched__';
-var Ch;
-b.request[_h] ||
+const Ch = '__agent_base_https_request_patched__';
+var xh;
+b.request[Ch] ||
   ((b.request =
-    ((Ch = b.request),
+    ((xh = b.request),
     function(t, e) {
       let n;
       return (
         (n = 'string' == typeof t ? d.parse(t) : Object.assign({}, t)),
         null == n.port && (n.port = 443),
         (n.secureEndpoint = !0),
-        Ch.call(b, n, e)
+        xh.call(b, n, e)
       );
     })),
-  (b.request[_h] = !0)),
+  (b.request[Ch] = !0)),
   (b.get = function(t, e, n) {
     let r;
     'string' == typeof t && e && 'function' != typeof e
@@ -31857,8 +31862,8 @@ b.request[_h] ||
     const i = b.request(r, n);
     return i.end(), i;
   });
-var xh,
-  Eh = F(function(t, e) {
+var Eh,
+  Fh = F(function(t, e) {
     /*!
      * @overview es6-promise - a tiny implementation of Promises/A+.
      * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
@@ -32289,29 +32294,29 @@ var xh,
       );
     })();
   }),
-  Fh =
-    ((xh = void 0),
-    (xh =
+  Sh =
+    ((Eh = void 0),
+    (Eh =
       void 0 !== C ? C : void 0 !== window && window.document ? window : self),
     (function() {
-      if (!xh.hasOwnProperty('Promise')) return !1;
+      if (!Eh.hasOwnProperty('Promise')) return !1;
       var t,
-        e = xh.Promise;
+        e = Eh.Promise;
       return !!(
         e.hasOwnProperty('resolve') &&
         e.hasOwnProperty('reject') &&
         e.hasOwnProperty('all') &&
         e.hasOwnProperty('race') &&
         ((t = void 0),
-        new xh.Promise(function(e) {
+        new Eh.Promise(function(e) {
           t = e;
         }) && 'function' == typeof t)
       );
     })()
-      ? xh.Promise
-      : Eh.Promise),
-  Sh = (function() {
-    var t = Fh;
+      ? Eh.Promise
+      : Fh.Promise),
+  Oh = (function() {
+    var t = Sh;
     function e(t) {
       return t && 'function' == typeof t.then && 'function' == typeof t.catch;
     }
@@ -32342,24 +32347,24 @@ var xh,
       };
     };
   })();
-const Oh = o.inherits,
-  kh = t.EventEmitter;
-var Ah = jh;
-function jh(t, e) {
-  if (!(this instanceof jh)) return new jh(t, e);
-  kh.call(this), (this._promisifiedCallback = !1);
+const kh = o.inherits,
+  Ah = t.EventEmitter;
+var jh = Bh;
+function Bh(t, e) {
+  if (!(this instanceof Bh)) return new Bh(t, e);
+  Ah.call(this), (this._promisifiedCallback = !1);
   let n = e;
   'function' == typeof t ? (this.callback = t) : t && (n = t),
     (this.timeout = (n && n.timeout) || null),
     (this.options = n);
 }
-Oh(jh, kh),
-  (jh.prototype.callback = function(t, e) {
+kh(Bh, Ah),
+  (Bh.prototype.callback = function(t, e) {
     throw new Error(
       '"agent-base" has no default implementation, you must subclass and override `callback()`'
     );
   }),
-  (jh.prototype.addRequest = function(t, e) {
+  (Bh.prototype.addRequest = function(t, e) {
     const n = Object.assign({}, e);
     null == n.host && (n.host = 'localhost'),
       null == n.port && (n.port = n.secureEndpoint ? 443 : 80);
@@ -32384,7 +32389,7 @@ Oh(jh, kh),
     }
     !this._promisifiedCallback &&
       this.callback.length >= 3 &&
-      ((this.callback = Sh(this.callback, this)),
+      ((this.callback = Oh(this.callback, this)),
       (this._promisifiedCallback = !0)),
       s > 0 &&
         (i = setTimeout(function() {
@@ -32424,16 +32429,16 @@ Oh(jh, kh),
       Promise.reject(t).catch(a);
     }
   }),
-  (jh.prototype.freeSocket = function(t, e) {
+  (Bh.prototype.freeSocket = function(t, e) {
     t.destroy();
   });
-var Bh = 1e3,
-  Ih = 60 * Bh,
+var Ih = 1e3,
   Th = 60 * Ih,
-  Mh = 24 * Th,
-  Ph = 7 * Mh,
-  Nh = 365.25 * Mh,
-  Rh = function(t, e) {
+  Mh = 60 * Th,
+  Ph = 24 * Mh,
+  Nh = 7 * Ph,
+  Rh = 365.25 * Ph,
+  Lh = function(t, e) {
     e = e || {};
     var n = typeof t;
     if ('string' === n && t.length > 0)
@@ -32450,33 +32455,33 @@ var Bh = 1e3,
           case 'yrs':
           case 'yr':
           case 'y':
-            return n * Nh;
+            return n * Rh;
           case 'weeks':
           case 'week':
           case 'w':
-            return n * Ph;
+            return n * Nh;
           case 'days':
           case 'day':
           case 'd':
-            return n * Mh;
+            return n * Ph;
           case 'hours':
           case 'hour':
           case 'hrs':
           case 'hr':
           case 'h':
-            return n * Th;
+            return n * Mh;
           case 'minutes':
           case 'minute':
           case 'mins':
           case 'min':
           case 'm':
-            return n * Ih;
+            return n * Th;
           case 'seconds':
           case 'second':
           case 'secs':
           case 'sec':
           case 's':
-            return n * Bh;
+            return n * Ih;
           case 'milliseconds':
           case 'millisecond':
           case 'msecs':
@@ -32491,18 +32496,18 @@ var Bh = 1e3,
       return e.long
         ? (function(t) {
             var e = Math.abs(t);
-            if (e >= Mh) return Lh(t, e, Mh, 'day');
-            if (e >= Th) return Lh(t, e, Th, 'hour');
-            if (e >= Ih) return Lh(t, e, Ih, 'minute');
-            if (e >= Bh) return Lh(t, e, Bh, 'second');
+            if (e >= Ph) return Vh(t, e, Ph, 'day');
+            if (e >= Mh) return Vh(t, e, Mh, 'hour');
+            if (e >= Th) return Vh(t, e, Th, 'minute');
+            if (e >= Ih) return Vh(t, e, Ih, 'second');
             return t + ' ms';
           })(t)
         : (function(t) {
             var e = Math.abs(t);
-            if (e >= Mh) return Math.round(t / Mh) + 'd';
-            if (e >= Th) return Math.round(t / Th) + 'h';
-            if (e >= Ih) return Math.round(t / Ih) + 'm';
-            if (e >= Bh) return Math.round(t / Bh) + 's';
+            if (e >= Ph) return Math.round(t / Ph) + 'd';
+            if (e >= Mh) return Math.round(t / Mh) + 'h';
+            if (e >= Th) return Math.round(t / Th) + 'm';
+            if (e >= Ih) return Math.round(t / Ih) + 's';
             return t + 'ms';
           })(t);
     throw new Error(
@@ -32510,11 +32515,11 @@ var Bh = 1e3,
         JSON.stringify(t)
     );
   };
-function Lh(t, e, n, r) {
+function Vh(t, e, n, r) {
   var i = e >= 1.5 * n;
   return Math.round(t / n) + ' ' + r + (i ? 's' : '');
 }
-var Vh = function(t) {
+var Uh = function(t) {
     function e(t) {
       for (var e = 0, r = 0; r < t.length; r++)
         (e = (e << 5) - e + t.charCodeAt(r)), (e |= 0);
@@ -32603,7 +32608,7 @@ var Vh = function(t) {
           if (n.names[e].test(t)) return !0;
         return !1;
       }),
-      (n.humanize = Rh),
+      (n.humanize = Lh),
       Object.keys(t).forEach(function(e) {
         n[e] = t[e];
       }),
@@ -32616,7 +32621,7 @@ var Vh = function(t) {
       n
     );
   },
-  Uh = F(function(t, e) {
+  zh = F(function(t, e) {
     function n(t) {
       return (n =
         'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
@@ -32793,7 +32798,7 @@ var Vh = function(t) {
         '#FFCC00',
         '#FFCC33'
       ]),
-      (t.exports = Vh(e)),
+      (t.exports = Uh(e)),
       (t.exports.formatters.j = function(t) {
         try {
           return JSON.stringify(t);
@@ -32802,14 +32807,14 @@ var Vh = function(t) {
         }
       });
   }),
-  zh =
-    (Uh.log,
-    Uh.formatArgs,
-    Uh.save,
-    Uh.load,
-    Uh.useColors,
-    Uh.storage,
-    Uh.colors,
+  qh =
+    (zh.log,
+    zh.formatArgs,
+    zh.save,
+    zh.load,
+    zh.useColors,
+    zh.storage,
+    zh.colors,
     F(function(t, e) {
       (e.init = function(t) {
         t.inspectOpts = {};
@@ -32952,7 +32957,7 @@ var Vh = function(t) {
             t
           );
         }, {})),
-        (t.exports = Vh(e));
+        (t.exports = Uh(e));
       var n = t.exports.formatters;
       (n.o = function(t) {
         return (
@@ -32967,33 +32972,33 @@ var Vh = function(t) {
           );
         });
     })),
-  qh =
-    (zh.init,
-    zh.log,
-    zh.formatArgs,
-    zh.save,
-    zh.load,
-    zh.useColors,
-    zh.colors,
-    zh.inspectOpts,
+  Wh =
+    (qh.init,
+    qh.log,
+    qh.formatArgs,
+    qh.save,
+    qh.load,
+    qh.useColors,
+    qh.colors,
+    qh.inspectOpts,
     F(function(t) {
       'undefined' == typeof process ||
       'renderer' === process.type ||
       !0 === process.browser ||
       process.__nwjs
-        ? (t.exports = Uh)
-        : (t.exports = zh);
+        ? (t.exports = zh)
+        : (t.exports = qh);
     })),
-  Wh = o.inherits,
-  $h = qh('https-proxy-agent'),
-  Kh = Gh;
-function Gh(t) {
-  if (!(this instanceof Gh)) return new Gh(t);
+  $h = o.inherits,
+  Kh = Wh('https-proxy-agent'),
+  Gh = Yh;
+function Yh(t) {
+  if (!(this instanceof Yh)) return new Yh(t);
   if (('string' == typeof t && (t = d.parse(t)), !t))
     throw new Error(
       'an HTTP(S) proxy server `host` and `port` must be specified!'
     );
-  $h('creating new HttpsProxyAgent instance: %o', t), Ah.call(this, t);
+  Kh('creating new HttpsProxyAgent instance: %o', t), jh.call(this, t);
   var e = Object.assign({}, t);
   (this.secureProxy = !!e.protocol && /^https:?$/i.test(e.protocol)),
     (e.host = e.hostname || e.host),
@@ -33005,11 +33010,11 @@ function Gh(t) {
     (this.proxy = e),
     (this.defaultPort = 443);
 }
-function Yh(t) {
+function Hh(t) {
   t.resume();
 }
-Wh(Gh, Ah),
-  (Gh.prototype.callback = function(e, n, r) {
+$h(Yh, jh),
+  (Yh.prototype.callback = function(e, n, r) {
     var i,
       o = this.proxy;
     i = this.secureProxy ? y.connect(o) : v.connect(o);
@@ -33024,15 +33029,15 @@ Wh(Gh, Ah),
               h = l.toString('ascii');
             if (!~h.indexOf('\r\n\r\n'))
               return (
-                $h('have not received end of HTTP headers yet...'), void c()
+                Kh('have not received end of HTTP headers yet...'), void c()
               );
             var f = h.substring(0, h.indexOf('\r\n')),
               d = +f.split(' ')[1];
-            if (($h('got proxy server response: %o', f), 200 == d)) {
+            if ((Kh('got proxy server response: %o', f), 200 == d)) {
               var b = i;
               (s = l = null),
                 n.secureEndpoint &&
-                  ($h(
+                  (Kh(
                     'upgrading proxy-connected socket to TLS connection: %o',
                     n.host
                   ),
@@ -33043,7 +33048,7 @@ Wh(Gh, Ah),
                   (n.port = null),
                   (b = y.connect(n))),
                 a(),
-                e.once('socket', Yh),
+                e.once('socket', Hh),
                 r(null, b);
             } else
               a(),
@@ -33062,17 +33067,17 @@ Wh(Gh, Ah),
         i.removeListener('readable', c);
     }
     function l(t) {
-      $h('onclose had error %o', t);
+      Kh('onclose had error %o', t);
     }
     function h() {
-      $h('onend');
+      Kh('onend');
     }
     function f(t) {
       a(), r(t);
     }
     function p(t) {
       if (
-        ($h('replaying proxy buffer for failed request'),
+        (Kh('replaying proxy buffer for failed request'),
         !(t.listenerCount('data') > 0))
       )
         throw new Error('should not happen...');
@@ -33114,18 +33119,18 @@ for (
    * See the License for the specific language governing permissions and
    * limitations under the License.
    */
-  var Hh = d.parse,
-    Qh =
+  var Qh = d.parse,
+    Jh =
       (new b.Agent({ keepAlive: !0 }),
       function t(e, n, r, i) {
         var o,
-          s = Hh(e);
+          s = Qh(e);
         if (i) for (var u in i) 'body' === u ? (o = i[u]) : (s[u] = i[u]);
         (s.headers = s.headers || {}),
           (s.headers['User-Agent'] = 'GoogleGeoApiClientJS/0.5.5');
         var c = process.env.http_proxy || process.env.https_proxy;
         if (c) {
-          var a = new Kh(c);
+          var a = new Gh(c);
           s.agent = a;
         }
         var l = b
@@ -33168,9 +33173,9 @@ for (
           }
         );
       }),
-    Jh = function(t, e) {
+    Zh = function(t, e) {
       return function(n) {
-        return wh.start(function(r) {
+        return _h.start(function(r) {
           var i = t(r, n);
           return function() {
             e(i);
@@ -33178,8 +33183,8 @@ for (
         });
       };
     },
-    Zh = function(t) {
-      var e = wh;
+    Xh = function(t) {
+      var e = _h;
       return {
         attempt: function(n) {
           var r = n.do,
@@ -33197,7 +33202,7 @@ for (
         }
       };
     },
-    Xh = function(t) {
+    tf = function(t) {
       var e = [],
         n = 0;
       return {
@@ -33209,15 +33214,15 @@ for (
         }
       };
     },
-    tf = function(t, e) {
+    ef = function(t, e) {
       return {
         create: function(n, r) {
           var i = {},
-            o = wh.withValue(),
-            s = Xh(n);
+            o = _h.withValue(),
+            s = tf(n);
           return (
             (i.add = function(i) {
-              var u = wh
+              var u = _h
                 .start(function(t) {
                   o.finally(t);
                 })
@@ -33230,7 +33235,7 @@ for (
                 });
               return (
                 (o = o.thenDo(function() {
-                  return wh.start(function(t) {
+                  return _h.start(function(t) {
                     u.finally(t);
                   });
                 })),
@@ -33242,7 +33247,7 @@ for (
         }
       };
     },
-    ef = function(t) {
+    nf = function(t) {
       var e = t.key || process.env.GOOGLE_MAPS_API_KEY,
         n = t.channel,
         r = t.clientId || process.env.GOOGLE_MAPS_API_CLIENT_ID,
@@ -33250,7 +33255,7 @@ for (
         o = t.rate || {},
         s = o.limit || 50,
         u = o.period || 1e3,
-        c = t.makeUrlRequest || Qh,
+        c = t.makeUrlRequest || Jh,
         a = t.setTimeout || setTimeout,
         l = t.clearTimeout || clearTimeout,
         h =
@@ -33258,9 +33263,9 @@ for (
           function() {
             return new Date().getTime();
           },
-        f = Jh(a, l),
-        b = Zh(f).attempt,
-        v = tf(f, h).create(s, u);
+        f = Zh(a, l),
+        b = Xh(f).attempt,
+        v = ef(f, h).create(s, u);
       return function(o, s, u) {
         u = u || function() {};
         var a = s.retryOptions || t.retryOptions || {};
@@ -33336,7 +33341,7 @@ for (
           C = b({
             do: function() {
               return v.add(function() {
-                return wh.start(function(t, e) {
+                return _h.start(function(t, e) {
                   return c(m, t, e, y);
                 });
               });
@@ -33348,13 +33353,13 @@ for (
             increment: a.increment,
             jitter: a.jitter
           }),
-          x = wh
+          x = _h
             .race([_, C])
             .thenDo(function(t) {
               return (
                 (t.requestUrl = m),
                 (t.query = s),
-                w(t) ? wh.withValue(t) : wh.withError(t)
+                w(t) ? _h.withValue(t) : _h.withError(t)
               );
             })
             .thenDo(
@@ -33379,7 +33384,7 @@ for (
         return delete x.thenDo, x;
       };
     },
-    nf = F(function(t, e) {
+    rf = F(function(t, e) {
       /**
        * @license
        * Copyright 2016 Google Inc. All Rights Reserved.
@@ -33549,7 +33554,7 @@ for (
           );
         });
     }),
-    rf = F(function(t, e) {
+    of = F(function(t, e) {
       /**
        * @license
        * Copyright 2016 Google Inc. All Rights Reserved.
@@ -33571,7 +33576,7 @@ for (
       };
       (e.pipedKeyValues = function(t) {
         if (!t || 'object' != typeof t)
-          throw new nf.InvalidValueError('not an Object');
+          throw new rf.InvalidValueError('not an Object');
         return Object.keys(t)
           .sort()
           .map(function(e) {
@@ -33598,13 +33603,13 @@ for (
           );
         }),
         (e.arrayOf = function(t, e) {
-          var r = nf.array(t);
+          var r = rf.array(t);
           return function(t) {
             return (t = r(n(t))).join(e || '|');
           };
         }),
         (e.latLng = function(t) {
-          if (!t) throw new nf.InvalidValueError();
+          if (!t) throw new rf.InvalidValueError();
           return (
             null != t.lat && null != t.lng
               ? (t = [t.lat, t.lng])
@@ -33614,11 +33619,11 @@ for (
             n(t).join(',')
           );
         });
-      var r = nf.object({
-        south: nf.number,
-        west: nf.number,
-        north: nf.number,
-        east: nf.number
+      var r = rf.object({
+        south: rf.number,
+        west: rf.number,
+        north: rf.number,
+        east: rf.number
       });
       (e.bounds = function(t) {
         return (t = r(t)).south + ',' + t.west + '|' + t.north + ',' + t.east;
@@ -33629,47 +33634,47 @@ for (
             t.getTime ? ((t = t.getTime()), Math.round(t / 1e3)) : t
           );
         }),
-        (e.retryOptions = nf.object({
-          timeout: nf.optional(nf.number),
-          interval: nf.optional(nf.number),
-          increment: nf.optional(nf.number),
-          jitter: nf.optional(nf.number)
+        (e.retryOptions = rf.object({
+          timeout: rf.optional(rf.number),
+          interval: rf.optional(rf.number),
+          increment: rf.optional(rf.number),
+          jitter: rf.optional(rf.number)
         }));
     }),
-    of =
-      (rf.pipedKeyValues,
-      rf.locations,
-      rf.arrayOf,
-      rf.latLng,
-      rf.bounds,
-      rf.timeStamp,
-      rf.retryOptions,
+    sf =
+      (of.pipedKeyValues,
+      of.locations,
+      of.arrayOf,
+      of.latLng,
+      of.bounds,
+      of.timeStamp,
+      of.retryOptions,
       {
         geocode: {
           url: 'https://maps.googleapis.com/maps/api/geocode/json',
-          validator: nf.object({
-            address: nf.optional(nf.string),
-            components: nf.optional(rf.pipedKeyValues),
-            bounds: nf.optional(rf.bounds),
-            region: nf.optional(nf.string),
-            language: nf.optional(nf.string),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+          validator: rf.object({
+            address: rf.optional(rf.string),
+            components: rf.optional(of.pipedKeyValues),
+            bounds: rf.optional(of.bounds),
+            region: rf.optional(rf.string),
+            language: rf.optional(rf.string),
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           })
         },
         reverseGeocode: {
           url: 'https://maps.googleapis.com/maps/api/geocode/json',
-          validator: nf.compose([
-            nf.mutuallyExclusiveProperties(['place_id', 'latlng']),
-            nf.mutuallyExclusiveProperties(['place_id', 'result_type']),
-            nf.mutuallyExclusiveProperties(['place_id', 'location_type']),
-            nf.object({
-              latlng: nf.optional(rf.latLng),
-              place_id: nf.optional(nf.string),
-              result_type: nf.optional(rf.arrayOf(nf.string)),
-              location_type: nf.optional(
-                rf.arrayOf(
-                  nf.oneOf([
+          validator: rf.compose([
+            rf.mutuallyExclusiveProperties(['place_id', 'latlng']),
+            rf.mutuallyExclusiveProperties(['place_id', 'result_type']),
+            rf.mutuallyExclusiveProperties(['place_id', 'location_type']),
+            rf.object({
+              latlng: rf.optional(of.latLng),
+              place_id: rf.optional(rf.string),
+              result_type: rf.optional(of.arrayOf(rf.string)),
+              location_type: rf.optional(
+                of.arrayOf(
+                  rf.oneOf([
                     'ROOFTOP',
                     'RANGE_INTERPOLATED',
                     'GEOMETRIC_CENTER',
@@ -33677,14 +33682,14 @@ for (
                   ])
                 )
               ),
-              language: nf.optional(nf.string),
-              retryOptions: nf.optional(rf.retryOptions),
-              timeout: nf.optional(nf.number)
+              language: rf.optional(rf.string),
+              retryOptions: rf.optional(of.retryOptions),
+              timeout: rf.optional(rf.number)
             })
           ])
         }
       }),
-    sf = {
+    uf = {
       geolocate: {
         url: 'https://www.googleapis.com/geolocation/v1/geolocate',
         options: {
@@ -33697,86 +33702,86 @@ for (
             return 200 === t.status || 404 === t.status;
           }
         },
-        validator: nf.object({
-          homeMobileCountryCode: nf.optional(nf.number),
-          homeMobileNetworkCode: nf.optional(nf.number),
-          radioType: nf.optional(nf.string),
-          carrier: nf.optional(nf.string),
-          considerIp: nf.optional(nf.boolean),
-          cellTowers: nf.optional(
-            nf.array(
-              nf.object({
-                cellId: nf.number,
-                locationAreaCode: nf.number,
-                mobileCountryCode: nf.number,
-                mobileNetworkCode: nf.number,
-                age: nf.optional(nf.number),
-                signalStrength: nf.optional(nf.number),
-                timingAdvance: nf.optional(nf.number)
+        validator: rf.object({
+          homeMobileCountryCode: rf.optional(rf.number),
+          homeMobileNetworkCode: rf.optional(rf.number),
+          radioType: rf.optional(rf.string),
+          carrier: rf.optional(rf.string),
+          considerIp: rf.optional(rf.boolean),
+          cellTowers: rf.optional(
+            rf.array(
+              rf.object({
+                cellId: rf.number,
+                locationAreaCode: rf.number,
+                mobileCountryCode: rf.number,
+                mobileNetworkCode: rf.number,
+                age: rf.optional(rf.number),
+                signalStrength: rf.optional(rf.number),
+                timingAdvance: rf.optional(rf.number)
               })
             )
           ),
-          wifiAccessPoints: nf.optional(
-            nf.array(
-              nf.object({
-                macAddress: nf.string,
-                signalStrength: nf.optional(nf.number),
-                age: nf.optional(nf.number),
-                channel: nf.optional(nf.number),
-                signalToNoiseRatio: nf.optional(nf.number)
+          wifiAccessPoints: rf.optional(
+            rf.array(
+              rf.object({
+                macAddress: rf.string,
+                signalStrength: rf.optional(rf.number),
+                age: rf.optional(rf.number),
+                channel: rf.optional(rf.number),
+                signalToNoiseRatio: rf.optional(rf.number)
               })
             )
           ),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
-        })
-      }
-    },
-    uf = {
-      timezone: {
-        url: 'https://maps.googleapis.com/maps/api/timezone/json',
-        validator: nf.object({
-          location: rf.latLng,
-          timestamp: rf.timeStamp,
-          language: nf.optional(nf.string),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       }
     },
     cf = {
+      timezone: {
+        url: 'https://maps.googleapis.com/maps/api/timezone/json',
+        validator: rf.object({
+          location: of.latLng,
+          timestamp: of.timeStamp,
+          language: rf.optional(rf.string),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
+        })
+      }
+    },
+    af = {
       directions: {
         url: 'https://maps.googleapis.com/maps/api/directions/json',
-        validator: nf.compose([
-          nf.mutuallyExclusiveProperties(['arrival_time', 'departure_time']),
-          nf.object({
-            origin: rf.latLng,
-            destination: rf.latLng,
-            mode: nf.optional(
-              nf.oneOf(['driving', 'walking', 'bicycling', 'transit'])
+        validator: rf.compose([
+          rf.mutuallyExclusiveProperties(['arrival_time', 'departure_time']),
+          rf.object({
+            origin: of.latLng,
+            destination: of.latLng,
+            mode: rf.optional(
+              rf.oneOf(['driving', 'walking', 'bicycling', 'transit'])
             ),
-            waypoints: nf.optional(rf.arrayOf(rf.latLng)),
-            alternatives: nf.optional(nf.boolean),
-            avoid: nf.optional(
-              rf.arrayOf(nf.oneOf(['tolls', 'highways', 'ferries', 'indoor']))
+            waypoints: rf.optional(of.arrayOf(of.latLng)),
+            alternatives: rf.optional(rf.boolean),
+            avoid: rf.optional(
+              of.arrayOf(rf.oneOf(['tolls', 'highways', 'ferries', 'indoor']))
             ),
-            language: nf.optional(nf.string),
-            units: nf.optional(nf.oneOf(['metric', 'imperial'])),
-            region: nf.optional(nf.string),
-            departure_time: nf.optional(rf.timeStamp),
-            arrival_time: nf.optional(rf.timeStamp),
-            traffic_model: nf.optional(
-              nf.oneOf(['best_guess', 'pessimistic', 'optimistic'])
+            language: rf.optional(rf.string),
+            units: rf.optional(rf.oneOf(['metric', 'imperial'])),
+            region: rf.optional(rf.string),
+            departure_time: rf.optional(of.timeStamp),
+            arrival_time: rf.optional(of.timeStamp),
+            traffic_model: rf.optional(
+              rf.oneOf(['best_guess', 'pessimistic', 'optimistic'])
             ),
-            transit_mode: nf.optional(
-              rf.arrayOf(nf.oneOf(['bus', 'subway', 'train', 'tram', 'rail']))
+            transit_mode: rf.optional(
+              of.arrayOf(rf.oneOf(['bus', 'subway', 'train', 'tram', 'rail']))
             ),
-            transit_routing_preference: nf.optional(
-              nf.oneOf(['less_walking', 'fewer_transfers'])
+            transit_routing_preference: rf.optional(
+              rf.oneOf(['less_walking', 'fewer_transfers'])
             ),
-            optimize: nf.optional(nf.boolean),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+            optimize: rf.optional(rf.boolean),
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           }),
           function(t) {
             if (
@@ -33786,11 +33791,11 @@ for (
               delete t.optimize,
               t.waypoints && 'transit' === t.mode)
             )
-              throw new nf.InvalidValueError(
+              throw new rf.InvalidValueError(
                 'cannot specify waypoints with transit'
               );
             if (t.traffic_model && !t.departure_time)
-              throw new nf.InvalidValueError(
+              throw new rf.InvalidValueError(
                 'traffic_model requires departure_time'
               );
             return t;
@@ -33798,115 +33803,115 @@ for (
         ])
       }
     },
-    af = {
+    lf = {
       distanceMatrix: {
         url: 'https://maps.googleapis.com/maps/api/distancematrix/json',
-        validator: nf.compose([
-          nf.mutuallyExclusiveProperties(['arrival_time', 'departure_time']),
-          nf.object({
-            origins: rf.arrayOf(rf.latLng),
-            destinations: rf.arrayOf(rf.latLng),
-            mode: nf.optional(
-              nf.oneOf(['driving', 'walking', 'bicycling', 'transit'])
+        validator: rf.compose([
+          rf.mutuallyExclusiveProperties(['arrival_time', 'departure_time']),
+          rf.object({
+            origins: of.arrayOf(of.latLng),
+            destinations: of.arrayOf(of.latLng),
+            mode: rf.optional(
+              rf.oneOf(['driving', 'walking', 'bicycling', 'transit'])
             ),
-            language: nf.optional(nf.string),
-            region: nf.optional(nf.string),
-            avoid: nf.optional(
-              rf.arrayOf(nf.oneOf(['tolls', 'highways', 'ferries', 'indoor']))
+            language: rf.optional(rf.string),
+            region: rf.optional(rf.string),
+            avoid: rf.optional(
+              of.arrayOf(rf.oneOf(['tolls', 'highways', 'ferries', 'indoor']))
             ),
-            units: nf.optional(nf.oneOf(['metric', 'imperial'])),
-            departure_time: nf.optional(rf.timeStamp),
-            arrival_time: nf.optional(rf.timeStamp),
-            transit_mode: nf.optional(
-              rf.arrayOf(nf.oneOf(['bus', 'subway', 'train', 'tram', 'rail']))
+            units: rf.optional(rf.oneOf(['metric', 'imperial'])),
+            departure_time: rf.optional(of.timeStamp),
+            arrival_time: rf.optional(of.timeStamp),
+            transit_mode: rf.optional(
+              of.arrayOf(rf.oneOf(['bus', 'subway', 'train', 'tram', 'rail']))
             ),
-            transit_routing_preference: nf.optional(
-              nf.oneOf(['less_walking', 'fewer_transfers'])
+            transit_routing_preference: rf.optional(
+              rf.oneOf(['less_walking', 'fewer_transfers'])
             ),
-            traffic_model: nf.optional(
-              nf.oneOf(['best_guess', 'pessimistic', 'optimistic'])
+            traffic_model: rf.optional(
+              rf.oneOf(['best_guess', 'pessimistic', 'optimistic'])
             ),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           })
         ])
       }
     },
-    lf = {
+    hf = {
       elevation: {
         url: 'https://maps.googleapis.com/maps/api/elevation/json',
-        validator: nf.object({
-          locations: rf.arrayOf(rf.latLng),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          locations: of.arrayOf(of.latLng),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       elevationAlongPath: {
         url: 'https://maps.googleapis.com/maps/api/elevation/json',
-        validator: nf.object({
+        validator: rf.object({
           path: function(t) {
-            return 'string' == typeof t ? 'enc:' + t : rf.arrayOf(rf.latLng)(t);
+            return 'string' == typeof t ? 'enc:' + t : of.arrayOf(of.latLng)(t);
           },
-          samples: nf.number,
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+          samples: rf.number,
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       }
     },
-    hf = {
+    ff = {
       snapToRoads: {
         url: 'https://roads.googleapis.com/v1/snapToRoads',
         supportsClientId: !1,
-        validator: nf.object({
-          path: rf.arrayOf(rf.latLng),
-          interpolate: nf.optional(nf.boolean),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          path: of.arrayOf(of.latLng),
+          interpolate: rf.optional(rf.boolean),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       nearestRoads: {
         url: 'https://roads.googleapis.com/v1/nearestRoads',
         supportsClientId: !1,
-        validator: nf.object({
-          points: rf.arrayOf(rf.latLng),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          points: of.arrayOf(of.latLng),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       speedLimits: {
         url: 'https://roads.googleapis.com/v1/speedLimits',
         supportsClientId: !1,
-        validator: nf.object({
-          placeId: nf.array(nf.string),
-          units: nf.optional(nf.oneOf(['KPH', 'MPH'])),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          placeId: rf.array(rf.string),
+          units: rf.optional(rf.oneOf(['KPH', 'MPH'])),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       snappedSpeedLimits: {
         url: 'https://roads.googleapis.com/v1/speedLimits',
         supportsClientId: !1,
-        validator: nf.object({
-          path: rf.arrayOf(rf.latLng),
-          units: nf.optional(nf.oneOf(['KPH', 'MPH'])),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          path: of.arrayOf(of.latLng),
+          units: rf.optional(rf.oneOf(['KPH', 'MPH'])),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       }
     },
-    ff = {
+    pf = {
       findPlace: {
         url:
           'https://maps.googleapis.com/maps/api/place/findplacefromtext/json',
-        validator: nf.compose([
-          nf.object({
-            input: nf.string,
-            inputtype: nf.oneOf(['textquery', 'phonenumber']),
-            language: nf.optional(nf.string),
-            fields: nf.optional(
-              rf.arrayOf(
-                nf.compose([
-                  nf.oneOf([
+        validator: rf.compose([
+          rf.object({
+            input: rf.string,
+            inputtype: rf.oneOf(['textquery', 'phonenumber']),
+            language: rf.optional(rf.string),
+            fields: rf.optional(
+              of.arrayOf(
+                rf.compose([
+                  rf.oneOf([
                     'formatted_address',
                     'geometry',
                     'geometry/location',
@@ -33933,14 +33938,14 @@ for (
                     'rating',
                     'plus_code'
                   ]),
-                  nf.deprecate(['alt_id', 'id', 'reference', 'scope'])
+                  rf.deprecate(['alt_id', 'id', 'reference', 'scope'])
                 ]),
                 ','
               )
             ),
-            locationbias: nf.optional(nf.string),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+            locationbias: rf.optional(rf.string),
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           }),
           function(t) {
             if (!t.locationbias || 'ipbias' == t.locationbias) return t;
@@ -33969,58 +33974,58 @@ for (
                 )
                   return t;
             }
-            throw new nf.InvalidValueError('invalid locationbias');
+            throw new rf.InvalidValueError('invalid locationbias');
           }
         ])
       },
       places: {
         url: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
-        validator: nf.object({
-          query: nf.optional(nf.string),
-          language: nf.optional(nf.string),
-          location: nf.optional(rf.latLng),
-          radius: nf.optional(nf.number),
-          minprice: nf.optional(nf.number),
-          maxprice: nf.optional(nf.number),
-          opennow: nf.optional(nf.boolean),
-          type: nf.optional(nf.string),
-          pagetoken: nf.optional(nf.string),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number),
-          region: nf.optional(nf.string)
+        validator: rf.object({
+          query: rf.optional(rf.string),
+          language: rf.optional(rf.string),
+          location: rf.optional(of.latLng),
+          radius: rf.optional(rf.number),
+          minprice: rf.optional(rf.number),
+          maxprice: rf.optional(rf.number),
+          opennow: rf.optional(rf.boolean),
+          type: rf.optional(rf.string),
+          pagetoken: rf.optional(rf.string),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number),
+          region: rf.optional(rf.string)
         })
       },
       placesNearby: {
         url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json',
-        validator: nf.compose([
-          nf.mutuallyExclusivePropertiesRequired(['location', 'pagetoken']),
-          nf.object({
-            location: nf.optional(rf.latLng),
-            language: nf.optional(nf.string),
-            radius: nf.optional(nf.number),
-            keyword: nf.optional(nf.string),
-            minprice: nf.optional(nf.number),
-            maxprice: nf.optional(nf.number),
-            name: nf.optional(nf.string),
-            opennow: nf.optional(nf.boolean),
-            rankby: nf.optional(nf.oneOf(['prominence', 'distance'])),
-            type: nf.optional(nf.string),
-            pagetoken: nf.optional(nf.string),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+        validator: rf.compose([
+          rf.mutuallyExclusivePropertiesRequired(['location', 'pagetoken']),
+          rf.object({
+            location: rf.optional(of.latLng),
+            language: rf.optional(rf.string),
+            radius: rf.optional(rf.number),
+            keyword: rf.optional(rf.string),
+            minprice: rf.optional(rf.number),
+            maxprice: rf.optional(rf.number),
+            name: rf.optional(rf.string),
+            opennow: rf.optional(rf.boolean),
+            rankby: rf.optional(rf.oneOf(['prominence', 'distance'])),
+            type: rf.optional(rf.string),
+            pagetoken: rf.optional(rf.string),
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           })
         ])
       },
       place: {
         url: 'https://maps.googleapis.com/maps/api/place/details/json',
-        validator: nf.object({
-          placeid: nf.string,
-          sessiontoken: nf.optional(nf.string),
-          language: nf.optional(nf.string),
-          fields: nf.optional(
-            rf.arrayOf(
-              nf.compose([
-                nf.oneOf([
+        validator: rf.object({
+          placeid: rf.string,
+          sessiontoken: rf.optional(rf.string),
+          language: rf.optional(rf.string),
+          fields: rf.optional(
+            of.arrayOf(
+              rf.compose([
+                rf.oneOf([
                   'address_component',
                   'adr_address',
                   'alt_id',
@@ -34057,40 +34062,40 @@ for (
                   'user_ratings_total',
                   'plus_code'
                 ]),
-                nf.deprecate(['alt_id', 'id', 'reference', 'scope'])
+                rf.deprecate(['alt_id', 'id', 'reference', 'scope'])
               ]),
               ','
             )
           ),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       placesPhoto: {
         url: 'https://maps.googleapis.com/maps/api/place/photo',
-        validator: nf.compose([
-          nf.atLeastOneOfProperties(['maxwidth', 'maxheight']),
-          nf.object({
-            photoreference: nf.string,
-            maxwidth: nf.optional(nf.number),
-            maxheight: nf.optional(nf.number),
-            retryOptions: nf.optional(rf.retryOptions),
-            timeout: nf.optional(nf.number)
+        validator: rf.compose([
+          rf.atLeastOneOfProperties(['maxwidth', 'maxheight']),
+          rf.object({
+            photoreference: rf.string,
+            maxwidth: rf.optional(rf.number),
+            maxheight: rf.optional(rf.number),
+            retryOptions: rf.optional(of.retryOptions),
+            timeout: rf.optional(rf.number)
           })
         ])
       },
       placesAutoComplete: {
         url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
-        validator: nf.object({
-          input: nf.string,
-          sessiontoken: nf.optional(nf.string),
-          offset: nf.optional(nf.number),
-          location: nf.optional(rf.latLng),
-          language: nf.optional(nf.string),
-          radius: nf.optional(nf.number),
-          origin: nf.optional(nf.string),
-          types: nf.optional(
-            nf.oneOf([
+        validator: rf.object({
+          input: rf.string,
+          sessiontoken: rf.optional(rf.string),
+          offset: rf.optional(rf.number),
+          location: rf.optional(of.latLng),
+          language: rf.optional(rf.string),
+          radius: rf.optional(rf.number),
+          origin: rf.optional(rf.string),
+          types: rf.optional(
+            rf.oneOf([
               'geocode',
               'address',
               'establishment',
@@ -34098,32 +34103,32 @@ for (
               '(cities)'
             ])
           ),
-          components: nf.optional(rf.pipedKeyValues),
-          strictbounds: nf.optional(nf.boolean),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+          components: rf.optional(of.pipedKeyValues),
+          strictbounds: rf.optional(rf.boolean),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       },
       placesQueryAutoComplete: {
         url:
           'https://maps.googleapis.com/maps/api/place/queryautocomplete/json',
-        validator: nf.object({
-          input: nf.string,
-          offset: nf.optional(nf.number),
-          location: nf.optional(rf.latLng),
-          language: nf.optional(nf.string),
-          radius: nf.optional(nf.number),
-          retryOptions: nf.optional(rf.retryOptions),
-          timeout: nf.optional(nf.number)
+        validator: rf.object({
+          input: rf.string,
+          offset: rf.optional(rf.number),
+          location: rf.optional(of.latLng),
+          language: rf.optional(rf.string),
+          radius: rf.optional(rf.number),
+          retryOptions: rf.optional(of.retryOptions),
+          timeout: rf.optional(rf.number)
         })
       }
     },
-    pf = [],
-    df = 0;
-  df < 256;
-  ++df
+    df = [],
+    bf = 0;
+  bf < 256;
+  ++bf
 )
-  pf[df] = (df + 256).toString(16).substr(1);
+  df[bf] = (bf + 256).toString(16).substr(1);
 /**
  * @license
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -34139,8 +34144,8 @@ for (
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ var bf = function(t) {
-  var e = ef((t = t || {})),
+ */ var vf = function(t) {
+  var e = nf((t = t || {})),
     n =
       (o.deprecate,
       function(n) {
@@ -34161,15 +34166,15 @@ for (
           );
         };
       }),
-    r = of,
-    i = sf,
-    s = uf,
-    u = af,
-    c = lf,
-    a = hf,
-    l = ff;
+    r = sf,
+    i = uf,
+    s = cf,
+    u = lf,
+    c = hf,
+    a = ff,
+    l = pf;
   return {
-    directions: n(cf.directions),
+    directions: n(af.directions),
     distanceMatrix: n(u.distanceMatrix),
     elevation: n(c.elevation),
     elevationAlongPath: n(c.elevationAlongPath),
@@ -34190,10 +34195,16 @@ for (
     timezone: n(s.timezone)
   };
 };
-function vf() {
-  return bf({ key: process.env.WAY_CLI_API_KEY, Promise: Promise });
+function yf() {
+  return vf({ key: process.env.WAY_CLI_API_KEY, Promise: Promise });
 }
-var yf = [
+function gf(t) {
+  return !(
+    'string' != typeof t ||
+    !t.match(/Missing either a valid API key, or a client ID and secret/)
+  );
+}
+var mf = [
     {
       name: 'origin',
       type: 'input',
@@ -34213,7 +34224,7 @@ var yf = [
       }
     }
   ],
-  gf = t =>
+  Df = t =>
     encodeURIComponent(t).replace(
       /[!'()*]/g,
       t =>
@@ -34222,10 +34233,10 @@ var yf = [
           .toString(16)
           .toUpperCase()}`
     );
-function mf(t, e) {
-  return e.encode ? (e.strict ? gf(t) : encodeURIComponent(t)) : t;
+function wf(t, e) {
+  return e.encode ? (e.strict ? Df(t) : encodeURIComponent(t)) : t;
 }
-var Df = (t, e) => {
+var _f = (t, e) => {
     if (!t) return '';
     const n = (function(t) {
         switch (t.arrayFormat) {
@@ -34235,30 +34246,30 @@ var Df = (t, e) => {
               return void 0 === r || (t.skipNull && null === r)
                 ? n
                 : null === r
-                ? [...n, [mf(e, t), '[', i, ']'].join('')]
-                : [...n, [mf(e, t), '[', mf(i, t), ']=', mf(r, t)].join('')];
+                ? [...n, [wf(e, t), '[', i, ']'].join('')]
+                : [...n, [wf(e, t), '[', wf(i, t), ']=', wf(r, t)].join('')];
             };
           case 'bracket':
             return e => (n, r) =>
               void 0 === r || (t.skipNull && null === r)
                 ? n
                 : null === r
-                ? [...n, [mf(e, t), '[]'].join('')]
-                : [...n, [mf(e, t), '[]=', mf(r, t)].join('')];
+                ? [...n, [wf(e, t), '[]'].join('')]
+                : [...n, [wf(e, t), '[]=', wf(r, t)].join('')];
           case 'comma':
             return e => (n, r) =>
               null == r || 0 === r.length
                 ? n
                 : 0 === n.length
-                ? [[mf(e, t), '=', mf(r, t)].join('')]
-                : [[n, mf(r, t)].join(',')];
+                ? [[wf(e, t), '=', wf(r, t)].join('')]
+                : [[n, wf(r, t)].join(',')];
           default:
             return e => (n, r) =>
               void 0 === r || (t.skipNull && null === r)
                 ? n
                 : null === r
-                ? [...n, mf(e, t)]
-                : [...n, [mf(e, t), '=', mf(r, t)].join('')];
+                ? [...n, wf(e, t)]
+                : [...n, [wf(e, t), '=', wf(r, t)].join('')];
         }
       })(
         (e = Object.assign({ encode: !0, strict: !0, arrayFormat: 'none' }, e))
@@ -34276,16 +34287,16 @@ var Df = (t, e) => {
           return void 0 === i
             ? ''
             : null === i
-            ? mf(r, e)
+            ? wf(r, e)
             : Array.isArray(i)
             ? i.reduce(n(r), []).join('&')
-            : mf(r, e) + '=' + mf(i, e);
+            : wf(r, e) + '=' + wf(i, e);
         })
         .filter(t => t.length > 0)
         .join('&')
     );
   },
-  wf = F(function(t) {
+  Cf = F(function(t) {
     const e = () => {
       if ('linux' !== process.platform) return !1;
       if (
@@ -34306,11 +34317,11 @@ var Df = (t, e) => {
     };
     process.env.__IS_WSL_TEST__ ? (t.exports = e) : (t.exports = e());
   });
-const { promisify: _f } = o,
-  Cf = _f(i.access),
-  xf = _f(e.execFile),
-  Ef = n.join(__dirname, 'xdg-open');
-var Ff = async (t, n) => {
+const { promisify: xf } = o,
+  Ef = xf(i.access),
+  Ff = xf(e.execFile),
+  Sf = n.join(__dirname, 'xdg-open');
+var Of = async (t, n) => {
   if ('string' != typeof t) throw new TypeError('Expected a `target`');
   let r;
   n = { wait: !1, background: !1, url: !1, ...n };
@@ -34326,18 +34337,18 @@ var Ff = async (t, n) => {
       n.wait && s.push('--wait-apps'),
       n.background && s.push('--background'),
       n.app && s.push('-a', n.app);
-  else if ('win32' === process.platform || wf) {
+  else if ('win32' === process.platform || Cf) {
     if (
-      ((r = 'cmd' + (wf ? '.exe' : '')),
+      ((r = 'cmd' + (Cf ? '.exe' : '')),
       s.push('/s', '/c', 'start', '""', '/b'),
       (t = `"${t}"`),
       (u.windowsVerbatimArguments = !0),
       n.wait && s.push('/wait'),
       n.app)
     ) {
-      if (wf && n.app.startsWith('/mnt/')) {
+      if (Cf && n.app.startsWith('/mnt/')) {
         const t = await (async t => {
-          const { stdout: e } = await xf('wslpath', ['-w', t]);
+          const { stdout: e } = await Ff('wslpath', ['-w', t]);
           return e.trim();
         })(n.app);
         n.app = t;
@@ -34351,12 +34362,12 @@ var Ff = async (t, n) => {
       const t = !__dirname || '/' === __dirname;
       let e = !1;
       try {
-        await Cf(Ef, i.constants.X_OK), (e = !0);
+        await Ef(Sf, i.constants.X_OK), (e = !0);
       } catch (t) {}
       r =
         process.versions.electron || 'android' === process.platform || t || !e
           ? 'xdg-open'
-          : Ef;
+          : Sf;
     }
     o.length > 0 && s.push(...o),
       n.wait || ((u.stdio = 'ignore'), (u.detached = !0));
@@ -34373,7 +34384,7 @@ var Ff = async (t, n) => {
       })
     : (c.unref(), c);
 };
-function Sf(t, e) {
+function kf(t, e) {
   return w(this, void 0, void 0, function() {
     var n, r, i, o, s, u;
     return _(this, function(c) {
@@ -34388,7 +34399,7 @@ function Sf(t, e) {
             (s = e.units),
             [
               4,
-              vf()
+              yf()
                 .directions({
                   origin: n,
                   destination: r,
@@ -34402,14 +34413,14 @@ function Sf(t, e) {
         case 1:
           return [2, c.sent()];
         case 2:
-          return (u = c.sent()), fh(u), [3, 3];
+          return (u = c.sent()), fh(u), gf(u) && vh(), [3, 3];
         case 3:
           return [2];
       }
     });
   });
 }
-function Of(t, e, n) {
+function Af(t, e, n) {
   return w(this, void 0, Promise, function() {
     var r, i, o, s, u, c, a;
     return _(this, function(l) {
@@ -34428,12 +34439,12 @@ function Of(t, e, n) {
           destination_place_id: u.place_id,
           travel_mode: c
         }),
-        [2, 'https://www.google.com/maps/dir/?api=1&' + Df(a)]
+        [2, 'https://www.google.com/maps/dir/?api=1&' + _f(a)]
       );
     });
   });
 }
-var kf = [
+var jf = [
   {
     name: 'origins',
     type: 'input',
@@ -34462,7 +34473,7 @@ var kf = [
     default: 'none'
   }
 ];
-function Af(t) {
+function Bf(t) {
   return w(this, void 0, void 0, function() {
     var e, n, r, i, o, s, u;
     return _(this, function(c) {
@@ -34473,12 +34484,12 @@ function Af(t) {
             (e = t.origins),
             (n = t.destinations),
             (r = t.avoid),
-            [4, mh()]
+            [4, Dh()]
           );
         case 1:
           return (
             (i = c.sent()),
-            (o = vf()),
+            (o = yf()),
             (s = D({ origins: e, destinations: n }, i)),
             (0 !== r.length && r.includes('none')) || (s.avoid = r),
             [4, o.distanceMatrix(s).asPromise()]
@@ -34486,22 +34497,22 @@ function Af(t) {
         case 2:
           return [2, c.sent()];
         case 3:
-          return (u = c.sent()), fh(u), [3, 4];
+          return (u = c.sent()), fh(u), gf(u) && vh(), [3, 4];
         case 4:
           return [2];
       }
     });
   });
 }
-function jf() {
+function If() {
   return w(this, void 0, void 0, function() {
     var t, e, n, r, i, o, s, u, c;
     return _(this, function(a) {
       switch (a.label) {
         case 0:
-          return a.trys.push([0, 3, , 4]), [4, tl.prompt(kf)];
+          return a.trys.push([0, 3, , 4]), [4, tl.prompt(jf)];
         case 1:
-          return [4, Af(a.sent())];
+          return [4, Bf(a.sent())];
         case 2:
           if ((t = a.sent())) {
             if (
@@ -34587,7 +34598,7 @@ T(),
     .action(function() {
       return w(void 0, void 0, void 0, function() {
         return _(this, function(t) {
-          return [2, Dh()];
+          return [2, wh()];
         });
       });
     }),
@@ -34597,7 +34608,7 @@ T(),
       'Creates a distance matrix between <origins> and <destinations>'
     )
     .action(function() {
-      return jf();
+      return If();
     }),
   O.command('directions')
     .alias('dir')
@@ -34609,15 +34620,15 @@ T(),
           return _(this, function(i) {
             switch (i.label) {
               case 0:
-                return [4, tl.prompt(yf)];
+                return [4, tl.prompt(mf)];
               case 1:
-                return (t = i.sent()), [4, mh()];
+                return (t = i.sent()), [4, Dh()];
               case 2:
-                return (e = i.sent()), [4, Sf(t, e)];
+                return (e = i.sent()), [4, kf(t, e)];
               case 3:
-                return (n = i.sent()) ? [4, Of(n.json, t, e)] : [3, 6];
+                return (n = i.sent()) ? [4, Af(n.json, t, e)] : [3, 6];
               case 4:
-                return (r = i.sent()), dh(r), [4, Ff(r)];
+                return (r = i.sent()), dh(r), [4, Of(r)];
               case 5:
                 i.sent(), (i.label = 6);
               case 6:
