@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import t from 'events';
 import e from 'child_process';
 import n, { join as r } from 'path';

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 function _interopDefault(t) {
   return t && 'object' == typeof t && 'default' in t ? t.default : t;
