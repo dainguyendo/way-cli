@@ -1,9 +1,9 @@
+import { DistanceMatrixRequest, DistanceMatrixRow } from '@google/maps';
 import Inquirer from 'inquirer';
-import distanceMatrixPrompt from './prompts/distanceMatrix';
 import { getConfiguration } from './configure';
 import { initializeGoogleClient, isAPIKeyError } from './googlemaps';
 import * as log from './log';
-import { DistanceMatrixRow, DistanceMatrixRequest } from '@google/maps';
+import distanceMatrixPrompt from './prompts/distanceMatrix';
 import { WayCLIDistanceMatrixResult } from './types';
 
 function formatResponseDistanceMatrix(

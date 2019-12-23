@@ -1,11 +1,11 @@
 import { DirectionsResponse } from '@google/maps';
-import * as log from './log';
+import Inquirer from 'inquirer';
+import open from 'open';
+import * as qs from 'query-string';
 import { getConfiguration } from './configure';
 import { initializeGoogleClient, isAPIKeyError } from './googlemaps';
-import Inquirer from 'inquirer';
+import * as log from './log';
 import directionsPrompt from './prompts/directions';
-import * as qs from 'query-string';
-import open from 'open';
 import { WayCLIUserConfiguration } from './types';
 
 async function requestDirections(

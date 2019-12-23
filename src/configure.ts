@@ -1,9 +1,9 @@
-import Inquirer from 'inquirer';
-import configureQuestions from './prompts/configure';
-import * as path from 'path';
 import fs from 'fs';
-import { WayCLIUserConfiguration } from './types';
+import Inquirer from 'inquirer';
+import * as path from 'path';
 import * as log from './log';
+import configureQuestions from './prompts/configure';
+import { WayCLIUserConfiguration } from './types';
 
 const USER_CONFIG_PATH = path.join(__dirname, 'userConfig.json');
 const DEFAULT_USER_CONFIGURATION: WayCLIUserConfiguration = {

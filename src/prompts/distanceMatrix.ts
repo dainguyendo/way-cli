@@ -1,5 +1,5 @@
-import Inquirer from 'inquirer';
 import { TravelRestriction } from '@google/maps';
+import Inquirer from 'inquirer';
 
 const distanceMatrixQuestions: Inquirer.QuestionCollection = [
   {
