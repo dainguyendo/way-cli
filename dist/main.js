@@ -30138,29 +30138,6 @@ var editor = EditorPrompt,
         e.prompt.restoreDefaultPrompts();
       });
   }),
-  configureQuestions = [
-    {
-      name: 'language',
-      type: 'input',
-      message:
-        'Input the language code to return. See https://developers.google.com/maps/faq#languagesupport for more information.',
-      default: 'en'
-    },
-    {
-      name: 'mode',
-      type: 'list',
-      message: 'Select a mode of transportation',
-      choices: ['bicycling', 'driving', 'transit', 'walking'],
-      default: 'driving'
-    },
-    {
-      name: 'units',
-      type: 'list',
-      message: 'Specify measurement unit',
-      choices: ['imperial', 'metric'],
-      default: 'metric'
-    }
-  ],
   colorName$1 = {
     aliceblue: [240, 248, 255],
     antiquewhite: [250, 235, 215],
@@ -32130,6 +32107,29 @@ var log$1 = console.log,
       'Please see https://github.com/dainguyendo/way-cli#setup to set up your Google API Key.'
     );
   },
+  configureQuestions = [
+    {
+      name: 'language',
+      type: 'input',
+      message:
+        'Input the language code to return. See https://developers.google.com/maps/faq#languagesupport for more information.',
+      default: 'en'
+    },
+    {
+      name: 'mode',
+      type: 'list',
+      message: 'Select a mode of transportation',
+      choices: ['bicycling', 'driving', 'transit', 'walking'],
+      default: 'driving'
+    },
+    {
+      name: 'units',
+      type: 'list',
+      message: 'Specify measurement unit',
+      choices: ['imperial', 'metric'],
+      default: 'metric'
+    }
+  ],
   USER_CONFIG_PATH = path.join(__dirname, 'userConfig.json'),
   DEFAULT_USER_CONFIGURATION = {
     language: 'en',
@@ -32174,6 +32174,171 @@ var configureCommand = function() {
         }
       });
     });
+  },
+  isWsl_1 = createCommonjsModule(function(t) {
+    const e = () => {
+      if ('linux' !== process.platform) return !1;
+      if (
+        os
+          .release()
+          .toLowerCase()
+          .includes('microsoft')
+      )
+        return !0;
+      try {
+        return fs
+          .readFileSync('/proc/version', 'utf8')
+          .toLowerCase()
+          .includes('microsoft');
+      } catch (t) {
+        return !1;
+      }
+    };
+    process.env.__IS_WSL_TEST__ ? (t.exports = e) : (t.exports = e());
+  });
+const { promisify: promisify } = util$1,
+  pAccess = promisify(fs.access),
+  pExecFile = promisify(child_process.execFile),
+  localXdgOpenPath = path__default.join(__dirname, 'xdg-open'),
+  wslToWindowsPath = async t => {
+    const { stdout: e } = await pExecFile('wslpath', ['-w', t]);
+    return e.trim();
+  };
+var open = async (t, e) => {
+    if ('string' != typeof t) throw new TypeError('Expected a `target`');
+    let r;
+    e = { wait: !1, background: !1, url: !1, ...e };
+    let n = [];
+    const i = [],
+      o = {};
+    if (
+      (Array.isArray(e.app) && ((n = e.app.slice(1)), (e.app = e.app[0])),
+      e.url && (t = encodeURI(t)),
+      'darwin' === process.platform)
+    )
+      (r = 'open'),
+        e.wait && i.push('--wait-apps'),
+        e.background && i.push('--background'),
+        e.app && i.push('-a', e.app);
+    else if ('win32' === process.platform || isWsl_1) {
+      if (
+        ((r = 'cmd' + (isWsl_1 ? '.exe' : '')),
+        i.push('/s', '/c', 'start', '""', '/b'),
+        (t = `"${t}"`),
+        (o.windowsVerbatimArguments = !0),
+        e.wait && i.push('/wait'),
+        e.app)
+      ) {
+        if (isWsl_1 && e.app.startsWith('/mnt/')) {
+          const t = await wslToWindowsPath(e.app);
+          e.app = t;
+        }
+        i.push(e.app);
+      }
+      n.length > 0 && i.push(...n);
+    } else {
+      if (e.app) r = e.app;
+      else {
+        const t = !__dirname || '/' === __dirname;
+        let e = !1;
+        try {
+          await pAccess(localXdgOpenPath, fs.constants.X_OK), (e = !0);
+        } catch (t) {}
+        r =
+          process.versions.electron || 'android' === process.platform || t || !e
+            ? 'xdg-open'
+            : localXdgOpenPath;
+      }
+      n.length > 0 && i.push(...n),
+        e.wait || ((o.stdio = 'ignore'), (o.detached = !0));
+    }
+    i.push(t),
+      'darwin' === process.platform && n.length > 0 && i.push('--args', ...n);
+    const s = child_process.spawn(r, i, o);
+    return e.wait
+      ? new Promise((t, e) => {
+          s.once('error', e),
+            s.once('close', r => {
+              r > 0 ? e(new Error(`Exited with code ${r}`)) : t(s);
+            });
+        })
+      : (s.unref(), s);
+  },
+  strictUriEncode = t =>
+    encodeURIComponent(t).replace(
+      /[!'()*]/g,
+      t =>
+        `%${t
+          .charCodeAt(0)
+          .toString(16)
+          .toUpperCase()}`
+    );
+function encoderForArrayFormat(t) {
+  switch (t.arrayFormat) {
+    case 'index':
+      return e => (r, n) => {
+        const i = r.length;
+        return void 0 === n || (t.skipNull && null === n)
+          ? r
+          : null === n
+          ? [...r, [encode(e, t), '[', i, ']'].join('')]
+          : [
+              ...r,
+              [encode(e, t), '[', encode(i, t), ']=', encode(n, t)].join('')
+            ];
+      };
+    case 'bracket':
+      return e => (r, n) =>
+        void 0 === n || (t.skipNull && null === n)
+          ? r
+          : null === n
+          ? [...r, [encode(e, t), '[]'].join('')]
+          : [...r, [encode(e, t), '[]=', encode(n, t)].join('')];
+    case 'comma':
+      return e => (r, n) =>
+        null == n || 0 === n.length
+          ? r
+          : 0 === r.length
+          ? [[encode(e, t), '=', encode(n, t)].join('')]
+          : [[r, encode(n, t)].join(',')];
+    default:
+      return e => (r, n) =>
+        void 0 === n || (t.skipNull && null === n)
+          ? r
+          : null === n
+          ? [...r, encode(e, t)]
+          : [...r, [encode(e, t), '=', encode(n, t)].join('')];
+  }
+}
+function encode(t, e) {
+  return e.encode ? (e.strict ? strictUriEncode(t) : encodeURIComponent(t)) : t;
+}
+var stringify = (t, e) => {
+    if (!t) return '';
+    const r = encoderForArrayFormat(
+        (e = Object.assign({ encode: !0, strict: !0, arrayFormat: 'none' }, e))
+      ),
+      n = Object.assign({}, t);
+    if (e.skipNull)
+      for (const t of Object.keys(n))
+        (void 0 !== n[t] && null !== n[t]) || delete n[t];
+    const i = Object.keys(n);
+    return (
+      !1 !== e.sort && i.sort(e.sort),
+      i
+        .map(n => {
+          const i = t[n];
+          return void 0 === i
+            ? ''
+            : null === i
+            ? encode(n, e)
+            : Array.isArray(i)
+            ? i.reduce(r(n), []).join('&')
+            : encode(n, e) + '=' + encode(i, e);
+        })
+        .filter(t => t.length > 0)
+        .join('&')
+    );
   },
   task = createCommonjsModule(function(t, e) {
     /**
@@ -32791,7 +32956,7 @@ var es6Promise = createCommonjsModule(function(t, e) {
         : es6Promise.Promise
     );
   })(),
-  promisify = (function() {
+  promisify$1 = (function() {
     var t = promise;
     function e(t) {
       return t && 'function' == typeof t.then && 'function' == typeof t.catch;
@@ -32868,7 +33033,7 @@ inherits(Agent, EventEmitter),
     }
     !this._promisifiedCallback &&
       this.callback.length >= 3 &&
-      ((this.callback = promisify(this.callback, this)),
+      ((this.callback = promisify$1(this.callback, this)),
       (this._promisifiedCallback = !0)),
       s > 0 &&
         (i = setTimeout(function() {
@@ -34716,190 +34881,25 @@ function isAPIKeyError(t) {
   );
 }
 var directionsPrompt = [
-    {
-      name: 'origin',
-      type: 'input',
-      message: 'Specify origin',
-      default: '',
-      validate: function(t) {
-        return !!t;
-      }
-    },
-    {
-      name: 'destination',
-      type: 'input',
-      message: 'Specify destination',
-      default: '',
-      validate: function(t) {
-        return !!t;
-      }
+  {
+    name: 'origin',
+    type: 'input',
+    message: 'Specify origin',
+    default: '',
+    validate: function(t) {
+      return !!t;
     }
-  ],
-  strictUriEncode = t =>
-    encodeURIComponent(t).replace(
-      /[!'()*]/g,
-      t =>
-        `%${t
-          .charCodeAt(0)
-          .toString(16)
-          .toUpperCase()}`
-    );
-function encoderForArrayFormat(t) {
-  switch (t.arrayFormat) {
-    case 'index':
-      return e => (r, n) => {
-        const i = r.length;
-        return void 0 === n || (t.skipNull && null === n)
-          ? r
-          : null === n
-          ? [...r, [encode(e, t), '[', i, ']'].join('')]
-          : [
-              ...r,
-              [encode(e, t), '[', encode(i, t), ']=', encode(n, t)].join('')
-            ];
-      };
-    case 'bracket':
-      return e => (r, n) =>
-        void 0 === n || (t.skipNull && null === n)
-          ? r
-          : null === n
-          ? [...r, [encode(e, t), '[]'].join('')]
-          : [...r, [encode(e, t), '[]=', encode(n, t)].join('')];
-    case 'comma':
-      return e => (r, n) =>
-        null == n || 0 === n.length
-          ? r
-          : 0 === r.length
-          ? [[encode(e, t), '=', encode(n, t)].join('')]
-          : [[r, encode(n, t)].join(',')];
-    default:
-      return e => (r, n) =>
-        void 0 === n || (t.skipNull && null === n)
-          ? r
-          : null === n
-          ? [...r, encode(e, t)]
-          : [...r, [encode(e, t), '=', encode(n, t)].join('')];
-  }
-}
-function encode(t, e) {
-  return e.encode ? (e.strict ? strictUriEncode(t) : encodeURIComponent(t)) : t;
-}
-var stringify = (t, e) => {
-    if (!t) return '';
-    const r = encoderForArrayFormat(
-        (e = Object.assign({ encode: !0, strict: !0, arrayFormat: 'none' }, e))
-      ),
-      n = Object.assign({}, t);
-    if (e.skipNull)
-      for (const t of Object.keys(n))
-        (void 0 !== n[t] && null !== n[t]) || delete n[t];
-    const i = Object.keys(n);
-    return (
-      !1 !== e.sort && i.sort(e.sort),
-      i
-        .map(n => {
-          const i = t[n];
-          return void 0 === i
-            ? ''
-            : null === i
-            ? encode(n, e)
-            : Array.isArray(i)
-            ? i.reduce(r(n), []).join('&')
-            : encode(n, e) + '=' + encode(i, e);
-        })
-        .filter(t => t.length > 0)
-        .join('&')
-    );
   },
-  isWsl_1 = createCommonjsModule(function(t) {
-    const e = () => {
-      if ('linux' !== process.platform) return !1;
-      if (
-        os
-          .release()
-          .toLowerCase()
-          .includes('microsoft')
-      )
-        return !0;
-      try {
-        return fs
-          .readFileSync('/proc/version', 'utf8')
-          .toLowerCase()
-          .includes('microsoft');
-      } catch (t) {
-        return !1;
-      }
-    };
-    process.env.__IS_WSL_TEST__ ? (t.exports = e) : (t.exports = e());
-  });
-const { promisify: promisify$1 } = util$1,
-  pAccess = promisify$1(fs.access),
-  pExecFile = promisify$1(child_process.execFile),
-  localXdgOpenPath = path__default.join(__dirname, 'xdg-open'),
-  wslToWindowsPath = async t => {
-    const { stdout: e } = await pExecFile('wslpath', ['-w', t]);
-    return e.trim();
-  };
-var open = async (t, e) => {
-  if ('string' != typeof t) throw new TypeError('Expected a `target`');
-  let r;
-  e = { wait: !1, background: !1, url: !1, ...e };
-  let n = [];
-  const i = [],
-    o = {};
-  if (
-    (Array.isArray(e.app) && ((n = e.app.slice(1)), (e.app = e.app[0])),
-    e.url && (t = encodeURI(t)),
-    'darwin' === process.platform)
-  )
-    (r = 'open'),
-      e.wait && i.push('--wait-apps'),
-      e.background && i.push('--background'),
-      e.app && i.push('-a', e.app);
-  else if ('win32' === process.platform || isWsl_1) {
-    if (
-      ((r = 'cmd' + (isWsl_1 ? '.exe' : '')),
-      i.push('/s', '/c', 'start', '""', '/b'),
-      (t = `"${t}"`),
-      (o.windowsVerbatimArguments = !0),
-      e.wait && i.push('/wait'),
-      e.app)
-    ) {
-      if (isWsl_1 && e.app.startsWith('/mnt/')) {
-        const t = await wslToWindowsPath(e.app);
-        e.app = t;
-      }
-      i.push(e.app);
+  {
+    name: 'destination',
+    type: 'input',
+    message: 'Specify destination',
+    default: '',
+    validate: function(t) {
+      return !!t;
     }
-    n.length > 0 && i.push(...n);
-  } else {
-    if (e.app) r = e.app;
-    else {
-      const t = !__dirname || '/' === __dirname;
-      let e = !1;
-      try {
-        await pAccess(localXdgOpenPath, fs.constants.X_OK), (e = !0);
-      } catch (t) {}
-      r =
-        process.versions.electron || 'android' === process.platform || t || !e
-          ? 'xdg-open'
-          : localXdgOpenPath;
-    }
-    n.length > 0 && i.push(...n),
-      e.wait || ((o.stdio = 'ignore'), (o.detached = !0));
   }
-  i.push(t),
-    'darwin' === process.platform && n.length > 0 && i.push('--args', ...n);
-  const s = child_process.spawn(r, i, o);
-  return e.wait
-    ? new Promise((t, e) => {
-        s.once('error', e),
-          s.once('close', r => {
-            r > 0 ? e(new Error(`Exited with code ${r}`)) : t(s);
-          });
-      })
-    : (s.unref(), s);
-};
+];
 function requestDirections(t, e) {
   return __awaiter(this, void 0, void 0, function() {
     var r, n, i, o, s, u;
