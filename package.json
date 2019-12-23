@@ -63,9 +63,6 @@
   "bugs": {
     "url": "https://github.com/dainguyendo/way-cli/issues"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "keywords": [
     "javascript",
     "typescript",
