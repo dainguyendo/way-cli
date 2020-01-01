@@ -1,6 +1,6 @@
 import * as googleClient from '@google/maps';
 
-export function initializeGoogleClient(): googleClient.GoogleMapsClient {
+export function initializeGoogleClient(): googleClient.GoogleMapsClientWithPromise {
   const client = googleClient.createClient({
     key: process.env.WAY_CLI_API_KEY as string,
     Promise: Promise

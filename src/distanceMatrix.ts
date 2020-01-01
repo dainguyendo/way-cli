@@ -86,11 +86,8 @@ export async function distanceMatrixCommand() {
         throw new Error(`${status}: ${error_message}`);
       }
 
-      // TODO Type definitions has a bug - make contribution PR when possible
-      const origins = (origin_addresses as any) as string[];
-
       const formattedMatrix = formatResponseDistanceMatrix(
-        origins,
+        origin_addresses,
         destination_addresses,
         rows
       );
